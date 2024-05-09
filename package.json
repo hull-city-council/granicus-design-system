@@ -18,7 +18,6 @@
     "sanitize-html": "^2.13.0"
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "loader-utils": "3.2.1"
   },
   "scripts": {
