@@ -22,14 +22,20 @@ export default function FormAlert({ ...props }) {
     <>
       <Alert
         key={props.title}
-        sx={{ alignItems: "flex-start", p: 4 }}
+        sx={(theme) => ({
+          alignItems: "flex-start",
+          p: 4,
+          boxShadow: theme.shadow.md,
+          "--joy-shadowChannel": theme.vars.palette.primary.mainChannel,
+          "--joy-shadowRing": "inset 0 -3px 0 rgba(0 0 0 / 0.24)",
+        })}
         startDecorator={getIcon(props.type)}
         variant="soft"
         size="lg"
         color={props.type}
       >
         <div>
-          <Typography level="h3">{props.title}</Typography>
+          <Typography level="h4">{props.title}</Typography>
           <Typography level="body-md" color={props.type}>
             {props.content}
           </Typography>
