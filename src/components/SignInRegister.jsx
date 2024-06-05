@@ -1,4 +1,6 @@
 import React from "react";
+import { CssVarsProvider } from "@mui/joy/styles";
+import CssBaseline from "@mui/joy/CssBaseline";
 import {
   Stack,
   Card,
@@ -46,58 +48,60 @@ export default function SignInRegister({ ...props }) {
       ],
     },
   ];
-  console.log(otherAccounts);
   return (
-    <Stack spacing={2}>
-      <Card variant="outlined">
-        <Typography level="h2">Sign in to your account</Typography>
-        <Typography>
-          Register or sign in to your account to access our online services.
-        </Typography>
-        <List>
-          {benefits.map((benefit) => (
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: green[50] }}>
-                  <CheckIcon sx={{ color: green[500] }} />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={benefit} />
-            </ListItem>
-          ))}
-        </List>
-        <Button
-          endDecorator={<KeyboardArrowRight />}
-          color="primary"
-          size="lg"
-          component="a"
-          href={props.signinurl}
-        >
-          Sign in
-        </Button>
-        <Button
-          variant="outlined"
-          size="lg"
-          component="a"
-          href={props.registerurl}
-        >
-          Register
-        </Button>
-        <AccordionGroup sx={{ mt: 2 }}>
-          <Accordion>
-            <AccordionSummary>
-              Other Hull City Council Online Accounts
-            </AccordionSummary>
-            <AccordionDetails>
-              {otherAccounts[0].accounts.map((account) => (
-                <ListItem component="a" href={account.url}>
-                  <ListItemButton>{account.name}</ListItemButton>
-                </ListItem>
-              ))}
-            </AccordionDetails>
-          </Accordion>
-        </AccordionGroup>
-      </Card>
-    </Stack>
+    <CssVarsProvider>
+      <CssBaseline />
+      <Stack spacing={2}>
+        <Card variant="outlined">
+          <Typography level="h2">Sign in to your account</Typography>
+          <Typography>
+            Register or sign in to your account to access our online services.
+          </Typography>
+          <List>
+            {benefits.map((benefit, index) => (
+              <ListItem key={index}>
+                <ListItemAvatar>
+                  <Avatar sx={{ bgcolor: green[50] }}>
+                    <CheckIcon sx={{ color: green[500] }} />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={benefit} />
+              </ListItem>
+            ))}
+          </List>
+          <Button
+            endDecorator={<KeyboardArrowRight />}
+            color="primary"
+            size="lg"
+            component="a"
+            href={props.signinurl}
+          >
+            Sign in
+          </Button>
+          <Button
+            variant="outlined"
+            size="lg"
+            component="a"
+            href={props.registerurl}
+          >
+            Register
+          </Button>
+          <AccordionGroup sx={{ mt: 2 }}>
+            <Accordion>
+              <AccordionSummary>
+                Other Hull City Council Online Accounts
+              </AccordionSummary>
+              <AccordionDetails>
+                {otherAccounts[0].accounts.map((account, index) => (
+                  <ListItem component="a" href={account.url} key={index}>
+                    <ListItemButton>{account.name}</ListItemButton>
+                  </ListItem>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+          </AccordionGroup>
+        </Card>
+      </Stack>
+    </CssVarsProvider>
   );
 }
