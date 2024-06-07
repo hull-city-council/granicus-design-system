@@ -16,7 +16,7 @@ import {
   AccordionSummary,
 } from "@mui/joy";
 import { ListItemAvatar, ListItemText } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -61,8 +61,8 @@ export default function SignInRegister({ ...props }) {
             {benefits.map((benefit, index) => (
               <ListItem key={index}>
                 <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: green[50] }}>
-                    <CheckIcon sx={{ color: green[500] }} />
+                  <Avatar sx={{ bgcolor: grey[200] }}>
+                    <CheckIcon sx={{ color: grey[500] }} />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={benefit} />
