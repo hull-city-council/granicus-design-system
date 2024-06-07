@@ -71,7 +71,7 @@ export default function SignInRegister({ ...props }) {
           </List>
           <Button
             endDecorator={<KeyboardArrowRight />}
-            color="primary"
+            color="danger"
             size="lg"
             component="a"
             href={props.signinurl}
@@ -79,6 +79,7 @@ export default function SignInRegister({ ...props }) {
             Sign in
           </Button>
           <Button
+            color="danger"
             variant="outlined"
             size="lg"
             component="a"

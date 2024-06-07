@@ -1,8 +1,12 @@
 import React from "react";
-import Card from "@mui/joy/Card";
-import CardContent from "@mui/joy/CardContent";
-import CardCover from "@mui/joy/CardCover";
-import Typography from "@mui/joy/Typography";
+import {
+  Card,
+  CardContent,
+  CardCover,
+  Typography,
+  Button,
+  Grid,
+} from "@mui/joy";
 
 export default function ImageCard({ ...props }) {
   return (
@@ -34,6 +38,30 @@ export default function ImageCard({ ...props }) {
               myAccount
             </Typography>
           </Typography>
+          <Grid container spacing={1} sx={{ mt: 2, width: "100%" }}>
+            <Grid>
+              <Button
+                variant="solid"
+                color="danger"
+                size="lg"
+                component="a"
+                href="/MyRequests"
+              >
+                Your requests
+              </Button>
+            </Grid>
+            <Grid>
+              <Button
+                color="danger"
+                size="lg"
+                variant="soft"
+                component="a"
+                href="/MyServices"
+              >
+                All forms
+              </Button>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
     </>
