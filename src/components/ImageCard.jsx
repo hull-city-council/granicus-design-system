@@ -14,6 +14,7 @@ export default function ImageCard({ ...props }) {
           backgroundImage:
             "url('https://fs-filestore-eu.s3.eu-west-1.amazonaws.com/hull/images/myaccount-bg.svg')",
           backgroundSize: "cover",
+          backgroundPosition: "center",
         })}
       >
         {" "}
