@@ -21,7 +21,6 @@ export default function TopTasks({ ...props }) {
       }),
     },
   );
-  console.log(data);
   return (
     <>
       <Card
@@ -41,12 +40,12 @@ export default function TopTasks({ ...props }) {
             aria-label="vertical outlined button group"
             spacing="0.5rem"
           >
-            {props.isbusiness && (
+            {data?.integration?.transformed?.select_data[0]?.value?.length >
+            0 ? (
               <Button size="lg" key="one" endDecorator={<KeyboardArrowRight />}>
                 Business rates
               </Button>
-            )}
-            {!props.isbusiness && (
+            ) : (
               <>
                 <Button
                   size="lg"
