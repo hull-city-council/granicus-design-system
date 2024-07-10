@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardCover,
-  Typography,
-  Button,
-  Grid,
-} from "@mui/joy";
+import { Card, CardContent, Typography, Button, Grid } from "@mui/joy";
 
 export default function ImageCard({ ...props }) {
   return (
@@ -18,16 +11,12 @@ export default function ImageCard({ ...props }) {
           width: "100%",
           flexGrow: 1,
           minHeight: 200,
+          backgroundImage:
+            "url('https://fs-filestore-eu.s3.eu-west-1.amazonaws.com/hull/images/myaccount-bg.svg')",
+          backgroundSize: "cover",
         })}
       >
-        <CardCover>
-          <img
-            src="https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&w=1080"
-            srcSet="https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&w=1080&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </CardCover>
+        {" "}
         <CardContent sx={{ justifyContent: "center" }}>
           <Typography level="h2" fontWeight={"normal"} sx={{ mb: 0 }}>
             {props.accountname},
