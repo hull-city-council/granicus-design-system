@@ -4,9 +4,15 @@ import { Card, CardContent, Button, ButtonGroup, Stack, Grid } from "@mui/joy";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 export default function TopTasks({ ...props }) {
+  const sid =
+    typeof FS !== "undefined" && FS !== null
+      ? (ref = FS.Auth) != null
+        ? ref.session["auth-session"]
+        : void 0
+      : void 0;
   const { isLoading, data } = useFetch(
     "/apibroker/runLookup?id=668e832c15d16&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AchieveForms&sid=" +
-      props?.sid,
+      sid,
     {
       method: "POST",
       body: JSON.stringify({
