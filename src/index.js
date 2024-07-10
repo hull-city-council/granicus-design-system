@@ -17,7 +17,7 @@ const cardImage = r2wc(ImageCard, {
 });
 
 const topTasks = r2wc(TopTasks, {
-  props: { isbusiness: "boolean" },
+  props: { ucrn: "string", sid: "string" },
 });
 
 customElements.define("alert-component", alert);
