@@ -1,31 +1,12 @@
 import React from "react";
-import useFetch from "react-fetch-hook";
 import { Card, CardContent, Button, ButtonGroup, Stack, Grid } from "@mui/joy";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 export default function TopTasks({ ...props }) {
-  const { isLoading, data } = useFetch(
-    "/apibroker/runLookup?id=668e832c15d16&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AchieveForms&sid=" +
-      props?.sid,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        formValues: {
-          Section1: {
-            ucrn: {
-              type: "text",
-              value: props.ucrn,
-            },
-          },
-        },
-      }),
-    },
-  );
   return (
     <>
       <Card
         variant="outlined"
-        color="danger"
         sx={(theme) => ({
           width: "100%",
           flexGrow: 1,
@@ -34,14 +15,12 @@ export default function TopTasks({ ...props }) {
       >
         <CardContent sx={{ justifyContent: "center" }}>
           <ButtonGroup
-            variant="soft"
-            color="danger"
+            variant="outlined"
             orientation="vertical"
             aria-label="vertical outlined button group"
             spacing="0.5rem"
           >
-            {data?.integration?.transformed?.select_data[0]?.value?.length >
-            0 ? (
+            {props.type === "business" ? (
               <Button size="lg" key="one" endDecorator={<KeyboardArrowRight />}>
                 Business rates
               </Button>
@@ -54,13 +33,25 @@ export default function TopTasks({ ...props }) {
                 >
                   Missed bins
                 </Button>
-                <Button size="lg" key="two">
+                <Button
+                  size="lg"
+                  key="two"
+                  endDecorator={<KeyboardArrowRight />}
+                >
                   Bulky item collection
                 </Button>
-                <Button size="lg" key="three">
+                <Button
+                  size="lg"
+                  key="three"
+                  endDecorator={<KeyboardArrowRight />}
+                >
                   Apply for a blue badge
                 </Button>
-                <Button size="lg" key="four">
+                <Button
+                  size="lg"
+                  key="four"
+                  endDecorator={<KeyboardArrowRight />}
+                >
                   Bin delivery, exchange or removal
                 </Button>
               </>
