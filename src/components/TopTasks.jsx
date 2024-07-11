@@ -1,18 +1,11 @@
 import React from "react";
-import { Card, CardContent, Button, ButtonGroup, Stack, Grid } from "@mui/joy";
+import { Card, CardContent, Button, ButtonGroup, Skeleton } from "@mui/joy";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 export default function TopTasks({ ...props }) {
   return (
     <>
-      <Card
-        variant="outlined"
-        sx={(theme) => ({
-          width: "100%",
-          flexGrow: 1,
-          minHeight: 200,
-        })}
-      >
+      <Card variant="outlined">
         <CardContent sx={{ justifyContent: "center" }}>
           <ButtonGroup
             variant="outlined"
@@ -24,7 +17,7 @@ export default function TopTasks({ ...props }) {
               <Button size="lg" key="one" endDecorator={<KeyboardArrowRight />}>
                 Business rates
               </Button>
-            ) : (
+            ) : props.type === "resident" ? (
               <>
                 <Button
                   size="lg"
@@ -53,6 +46,12 @@ export default function TopTasks({ ...props }) {
                   endDecorator={<KeyboardArrowRight />}
                 >
                   Bin delivery, exchange or removal
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button loading loadingPosition="start" color="primary">
+                  Loading...
                 </Button>
               </>
             )}
