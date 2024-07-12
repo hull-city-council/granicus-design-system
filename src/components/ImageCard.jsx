@@ -6,27 +6,25 @@ import {
   Button,
   Grid,
   CardCover,
+  IconButton,
 } from "@mui/joy";
 import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import SwipeableViews from "react-swipeable-views";
-import { bindKeyboard } from "react-swipeable-views-utils";
 import { useTheme } from "@mui/joy/styles";
 
 export default function ImageCard({ ...props }) {
-  const AutoPlaySwipeableViews = bindKeyboard(SwipeableViews);
-
   const images = [
     {
       label: "Save £££ and sign up for our commercial waste services",
       imgPath: "https://www.hull.gov.uk/images/Bins_and_recycling_landing.jfif",
+      link: "https://www.hull.gov.uk/services/commercial-waste",
     },
     {
       label: "Psssst, did you know? we offer pest control services",
       imgPath:
         "https://images.unsplash.com/photo-1540366244940-9dce0a570312?auto=format&fit=crop&w=400&h=250&q=60",
+      link: "https://www.hull.gov.uk/services/pest-control",
     },
   ];
   const theme = useTheme();
@@ -48,14 +46,14 @@ export default function ImageCard({ ...props }) {
   return (
     <>
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-        <Grid xs={6}>
+        <Grid xs={12} md={12} lg={8}>
           <Card
             variant="plain"
             sx={(theme) => ({
               boxShadow: theme.shadow.md,
               width: "100%",
               flexGrow: 1,
-              minHeight: 280,
+              minHeight: 250,
               backgroundImage:
                 "url('https://fs-filestore-eu.s3.eu-west-1.amazonaws.com/hull/images/myaccount-bg.svg')",
               backgroundSize: "cover",
@@ -71,7 +69,7 @@ export default function ImageCard({ ...props }) {
                 <Typography level="h1" fontWeight={"normal"} sx={{ mt: 0 }}>
                   Welcome to{" "}
                   <Typography level="h1" sx={{ fontWeight: "bold" }}>
-                    myAccount
+                    myAccount {props.type === "business" ? "Business" : ""}
                   </Typography>
                 </Typography>
                 <Grid container spacing={1} sx={{ mt: 2, width: "100%" }}>
@@ -102,14 +100,14 @@ export default function ImageCard({ ...props }) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={6}>
-          <Card sx={{ minHeight: "280px", width: 320 }}>
+        <Grid xs={12} md={12} lg={4}>
+          <Card sx={{ minHeight: "250px" }}>
             <CardCover>
               <img
                 src={images[activeStep].imgPath}
                 srcSet={images[activeStep].imgPath}
                 loading="lazy"
-                alt=""
+                alt={images[activeStep].label}
               />
             </CardCover>
             <CardCover
@@ -119,34 +117,51 @@ export default function ImageCard({ ...props }) {
               }}
             />
             <CardContent sx={{ justifyContent: "flex-end" }}>
-              <Typography level="title-lg" textColor="#fff">
+              <Typography level="title-lg" sx={{ pb: 1 }} textColor="#fff">
                 {images[activeStep].label}
               </Typography>
+              <Button
+                color="danger"
+                size="md"
+                component="a"
+                href={images[activeStep].link}
+              >
+                Find out more
+              </Button>
               <MobileStepper
-                sx={{ backgroundColor: "transparent", mt: -3 }}
-                variant="text"
+                sx={{
+                  backgroundColor: "transparent",
+                  mb: -1,
+                  "& .MuiMobileStepper-dot": {
+                    backgroundColor: "darkgray",
+                  },
+                  "& .MuiMobileStepper-dotActive": {
+                    backgroundColor: "red",
+                  },
+                }}
+                classes={{ progress: { color: "red" } }}
                 steps={maxSteps}
+                variant="dots"
                 position="static"
                 activeStep={activeStep}
                 nextButton={
-                  <Button
+                  <IconButton
+                    variant={activeStep === maxSteps - 1 ? "plain" : "soft"}
                     size="small"
                     onClick={handleNext}
-                    color="danger"
                     disabled={activeStep === maxSteps - 1}
                   >
-                    Next
                     {theme.direction === "rtl" ? (
                       <KeyboardArrowLeft />
                     ) : (
                       <KeyboardArrowRight />
                     )}
-                  </Button>
+                  </IconButton>
                 }
                 backButton={
-                  <Button
+                  <IconButton
+                    variant={activeStep === 0 ? "plain" : "soft"}
                     size="small"
-                    color="danger"
                     onClick={handleBack}
                     disabled={activeStep === 0}
                   >
@@ -155,8 +170,7 @@ export default function ImageCard({ ...props }) {
                     ) : (
                       <KeyboardArrowLeft />
                     )}
-                    Back
-                  </Button>
+                  </IconButton>
                 }
               />
             </CardContent>

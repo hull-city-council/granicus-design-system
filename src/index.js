@@ -13,7 +13,7 @@ const signInRegister = r2wc(SignInRegister, {
 });
 
 const cardImage = r2wc(ImageCard, {
-  props: { accountname: "string" },
+  props: { accountname: "string", type: "string" },
 });
 
 const topTasks = r2wc(TopTasks, {
