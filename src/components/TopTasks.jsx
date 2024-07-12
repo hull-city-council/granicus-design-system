@@ -5,7 +5,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 export default function TopTasks({ ...props }) {
   return (
     <>
-      <Card variant="outlined">
+      <Card variant="plain">
         <CardContent sx={{ justifyContent: "center" }}>
           <ButtonGroup
             variant="outlined"
@@ -14,9 +14,29 @@ export default function TopTasks({ ...props }) {
             spacing="0.5rem"
           >
             {props.type === "business" ? (
-              <Button size="lg" key="one" endDecorator={<KeyboardArrowRight />}>
-                Business rates
-              </Button>
+              <>
+                <Button
+                  size="lg"
+                  key="one"
+                  endDecorator={<KeyboardArrowRight />}
+                >
+                  Business rates
+                </Button>
+                <Button
+                  size="lg"
+                  key="two"
+                  endDecorator={<KeyboardArrowRight />}
+                >
+                  Commercial waste
+                </Button>
+                <Button
+                  size="lg"
+                  key="three"
+                  endDecorator={<KeyboardArrowRight />}
+                >
+                  Business support
+                </Button>
+              </>
             ) : props.type === "resident" ? (
               <>
                 <Button
