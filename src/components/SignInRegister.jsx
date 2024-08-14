@@ -55,7 +55,7 @@ export default function SignInRegister({ ...props }) {
         <Card variant="outlined">
           <Typography level="h2">Sign in to your account</Typography>
           <Typography>
-            Register or sign in to your account to access our online services.
+            Sign up or sign in to your account to access our online services.
           </Typography>
           <List>
             {benefits.map((benefit, index) => (
@@ -85,7 +85,7 @@ export default function SignInRegister({ ...props }) {
             component="a"
             href={props.registerurl}
           >
-            Register
+            Sign up
           </Button>
           <AccordionGroup sx={{ mt: 2 }}>
             <Accordion>
