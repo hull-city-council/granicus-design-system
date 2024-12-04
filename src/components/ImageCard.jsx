@@ -46,7 +46,7 @@ export default function ImageCard({ ...props }) {
   return (
     <>
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-        <Grid xs={12} md={12} lg={8}>
+        <Grid xs={12} md={12} lg={props.type === "business" ? 8 : 12}>
           <Card
             variant="plain"
             sx={(theme) => ({
@@ -100,82 +100,84 @@ export default function ImageCard({ ...props }) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid xs={12} md={12} lg={4}>
-          <Card sx={{ minHeight: "250px" }}>
-            <CardCover>
-              <img
-                src={images[activeStep].imgPath}
-                srcSet={images[activeStep].imgPath}
-                loading="lazy"
-                alt={images[activeStep].label}
-              />
-            </CardCover>
-            <CardCover
-              sx={{
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
-              }}
-            />
-            <CardContent sx={{ justifyContent: "flex-end" }}>
-              <Typography level="title-lg" sx={{ pb: 1 }} textColor="#fff">
-                {images[activeStep].label}
-              </Typography>
-              <Button
-                color="danger"
-                size="md"
-                component="a"
-                href={images[activeStep].link}
-              >
-                Find out more
-              </Button>
-              <MobileStepper
+        {props.type === "business" && (
+          <Grid xs={12} md={12} lg={4}>
+            <Card sx={{ minHeight: "250px" }}>
+              <CardCover>
+                <img
+                  src={images[activeStep].imgPath}
+                  srcSet={images[activeStep].imgPath}
+                  loading="lazy"
+                  alt={images[activeStep].label}
+                />
+              </CardCover>
+              <CardCover
                 sx={{
-                  backgroundColor: "transparent",
-                  mb: -1,
-                  "& .MuiMobileStepper-dot": {
-                    backgroundColor: "darkgray",
-                  },
-                  "& .MuiMobileStepper-dotActive": {
-                    backgroundColor: "red",
-                  },
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)",
                 }}
-                classes={{ progress: { color: "red" } }}
-                steps={maxSteps}
-                variant="dots"
-                position="static"
-                activeStep={activeStep}
-                nextButton={
-                  <IconButton
-                    variant={activeStep === maxSteps - 1 ? "plain" : "soft"}
-                    size="small"
-                    onClick={handleNext}
-                    disabled={activeStep === maxSteps - 1}
-                  >
-                    {theme.direction === "rtl" ? (
-                      <KeyboardArrowLeft />
-                    ) : (
-                      <KeyboardArrowRight />
-                    )}
-                  </IconButton>
-                }
-                backButton={
-                  <IconButton
-                    variant={activeStep === 0 ? "plain" : "soft"}
-                    size="small"
-                    onClick={handleBack}
-                    disabled={activeStep === 0}
-                  >
-                    {theme.direction === "rtl" ? (
-                      <KeyboardArrowRight />
-                    ) : (
-                      <KeyboardArrowLeft />
-                    )}
-                  </IconButton>
-                }
               />
-            </CardContent>
-          </Card>
-        </Grid>
+              <CardContent sx={{ justifyContent: "flex-end" }}>
+                <Typography level="title-lg" sx={{ pb: 1 }} textColor="#fff">
+                  {images[activeStep].label}
+                </Typography>
+                <Button
+                  color="danger"
+                  size="md"
+                  component="a"
+                  href={images[activeStep].link}
+                >
+                  Find out more
+                </Button>
+                <MobileStepper
+                  sx={{
+                    backgroundColor: "transparent",
+                    mb: -1,
+                    "& .MuiMobileStepper-dot": {
+                      backgroundColor: "darkgray",
+                    },
+                    "& .MuiMobileStepper-dotActive": {
+                      backgroundColor: "red",
+                    },
+                  }}
+                  classes={{ progress: { color: "red" } }}
+                  steps={maxSteps}
+                  variant="dots"
+                  position="static"
+                  activeStep={activeStep}
+                  nextButton={
+                    <IconButton
+                      variant={activeStep === maxSteps - 1 ? "plain" : "soft"}
+                      size="small"
+                      onClick={handleNext}
+                      disabled={activeStep === maxSteps - 1}
+                    >
+                      {theme.direction === "rtl" ? (
+                        <KeyboardArrowLeft />
+                      ) : (
+                        <KeyboardArrowRight />
+                      )}
+                    </IconButton>
+                  }
+                  backButton={
+                    <IconButton
+                      variant={activeStep === 0 ? "plain" : "soft"}
+                      size="small"
+                      onClick={handleBack}
+                      disabled={activeStep === 0}
+                    >
+                      {theme.direction === "rtl" ? (
+                        <KeyboardArrowRight />
+                      ) : (
+                        <KeyboardArrowLeft />
+                      )}
+                    </IconButton>
+                  }
+                />
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
       </Grid>
     </>
   );
