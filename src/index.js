@@ -5,19 +5,34 @@ import ImageCard from "./components/ImageCard";
 import TopTasks from "./components/TopTasks";
 
 const alert = r2wc(FormAlert, {
-  props: { title: "string", type: "string", content: "string" },
+  shadow: "closed",
+  props: { 
+    title: "string", 
+    type: "string", 
+    content: "string" 
+  },
 });
 
 const signInRegister = r2wc(SignInRegister, {
-  props: { benefits: "string", signinurl: "string", registerurl: "string" },
+  shadow: "closed",
+  props: { 
+    benefits: "string", 
+    signinurl: "string", 
+    registerurl: "string" },
 });
 
 const cardImage = r2wc(ImageCard, {
-  props: { accountname: "string", type: "string" },
+  shadow: "closed",
+  props: { 
+    accountname: "string", 
+    type: "string" },
 });
 
 const topTasks = r2wc(TopTasks, {
-  props: { type: "string" },
+  shadow: "closed",
+  props: { 
+    type: "string" 
+  },
 });
 
 customElements.define("alert-component", alert);

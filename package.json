@@ -5,19 +5,19 @@
   "keywords": [],
   "main": "src/index.jsx",
   "dependencies": {
-    "@emotion/react": "11.10.8",
-    "@emotion/styled": "11.10.8",
-    "@fontsource/roboto": "5.0.12",
-    "@mui/icons-material": "5.15.15",
-    "@mui/joy": "^5.0.0-beta.32",
-    "@mui/material": "^5.15.5",
-    "@r2wc/react-to-web-component": "2.0.3",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "@fontsource/roboto": "5.1.1",
+    "@mui/icons-material": "6.4.2",
+    "@mui/joy": "5.0.0-beta.51",
+    "@mui/material": "6.4.2",
+    "@r2wc/react-to-web-component": "2.0.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "5.0.1",
     "react-swipeable-views-react-18-fix": "^0.14.1",
     "react-swipeable-views-utils": "^0.14.0",
-    "sanitize-html": "^2.13.0"
+    "sanitize-html": "^2.14.0"
   },
   "devDependencies": {
     "loader-utils": "3.2.1"
