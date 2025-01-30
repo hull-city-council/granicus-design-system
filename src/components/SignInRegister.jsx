@@ -75,7 +75,7 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
         <CssVarsProvider theme={theme}>
           <CssBaseline />
           <Stack spacing={2}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{backgroundColor: "white"}}>
               <Typography level="h2">Sign in to your account</Typography>
               <Typography>
                 Sign up or sign in to your account to access our online services.
