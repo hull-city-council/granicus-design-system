@@ -72,13 +72,13 @@ export default function ImageCard({ accountname, type, container}) {
                 variant="plain"
                 sx={(theme) => ({
                   boxShadow: theme.shadow.md,
-                  width: "100%",
                   flexGrow: 1,
                   minHeight: 250,
                   backgroundImage:
                     "url('https://fs-filestore-eu.s3.eu-west-1.amazonaws.com/hull/images/myaccount-bg.svg')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  borderRadius: 20
                 })}
               >
                 {" "}
