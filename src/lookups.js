@@ -20,7 +20,7 @@ async function getUpcomingBinCollections(sid, uprn) {
           .then(data => {
             let responsePayload = JSON.parse(data.integration.transformed.rows_data[0].response);
             console.log(responsePayload);
-            return responsePayload.data;
+            return responsePayload;
           });
       } catch (error) {
         console.error(error);
