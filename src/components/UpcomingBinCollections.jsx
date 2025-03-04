@@ -12,13 +12,20 @@ export default function UpcomingBinCollections({ ...props }) {
     const [tableData, setTableData] = useState();
     const [eventData, setEventData] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
     useEffect(() => {
         if (props.sid && props.uprn) {
             async function fetchCollectionData() {
-                const collectionData = await getUpcomingBinCollections(props.sid, props.uprn);
-                const rows = [];
-                collectionData.collection_days.map((item, index) =>
-                    rows.push({
+                try {
+                    setIsLoading(true);
+                    const collectionData = await getUpcomingBinCollections(props.sid, props.uprn);
+                    
+                    if (!collectionData?.collection_days) {
+                        throw new Error('No collection data available');
+                    }
+    
+                    const rows = collectionData.collection_days.map((item, index) => ({
                         id: index,
                         type: item.collection_type,
                         date: new Date(item.next_collection_date).toLocaleDateString("en-GB", {
@@ -27,15 +34,22 @@ export default function UpcomingBinCollections({ ...props }) {
                             month: "long",
                             day: "numeric",
                         }),
-                    }),
-                );
-                setTableData(rows);
-                setEventData(collectionData?.events.street_event);
-                setIsLoading(false);
+                    }));
+    
+                    setTableData(rows);
+                    setEventData(collectionData?.events?.street_event);
+                    setError(null);
+                } catch (err) {
+                    setError(err.message);
+                    setTableData([]);
+                    setEventData(null);
+                } finally {
+                    setIsLoading(false);
+                }
             }
             fetchCollectionData();
         }
-    }, [props.sid, props.uprn])
+    }, [props.sid, props.uprn]);
 
     return (
         <>
