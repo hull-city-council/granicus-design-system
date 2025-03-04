@@ -18,7 +18,7 @@ async function getUpcomingBinCollections(sid, uprn) {
         })
           .then(response => response.json())
           .then(data => {
-            let responsePayload = data.integration.transformed.rows_data[0].response;
+            let responsePayload = JSON.parse(data.integration.transformed.rows_data[0].response);
             console.log(responsePayload);
             return responsePayload.data;
           });

@@ -10,12 +10,27 @@ import { getUpcomingBinCollections } from "../lookups";
 
 export default function UpcomingBinCollections({ ...props }) {
     const [tableData, setTableData] = useState();
+    const [eventData, setEventData] = useState();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         if (props.sid && props.uprn) {
             async function fetchCollectionData() {
                 const collectionData = await getUpcomingBinCollections(props.sid, props.uprn);
-                setTableData(collectionData);
+                const rows = [];
+                collectionData.collection_days.map((item, index) =>
+                    rows.push({
+                        id: index,
+                        type: item.collection_type,
+                        date: new Date(item.next_collection_date).toLocaleDateString("en-GB", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        }),
+                    }),
+                );
+                setTableData(rows);
+                setEventData(collectionData?.events.street_event);
                 setIsLoading(false);
             }
             fetchCollectionData();
@@ -24,6 +39,26 @@ export default function UpcomingBinCollections({ ...props }) {
 
     return (
         <>
+            {eventData && (
+                <Alert
+                    sx={{ alignItems: "flex-start", mb: 3 }}
+                    startDecorator={<ReportIcon />}
+                    variant="soft"
+                    color="danger"
+                >
+                    <div>
+                        <div>
+                            Missed bins on{" "}
+                            <span style={{ textTransform: "capitalize" }}>
+                                {eventData?.events.street_name}
+                            </span>
+                        </div>
+                        <Typography level="body-sm" color="danger">
+                            {eventData?.events.message}
+                        </Typography>
+                    </div>
+                </Alert>
+            )}
             {props.uprn.length > 0 ? (
                 <Box sx={{ height: 400, width: "100%" }} boxShadow={1}>
                     <DataGrid
