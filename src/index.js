@@ -4,6 +4,7 @@ import SignInRegister from "./components/SignInRegister";
 import ImageCard from "./components/ImageCard";
 import UpcomingBinCollections from "./components/UpcomingBinCollections";
 import TopTasks from "./components/TopTasks";
+import FeaturedNews from "./components/FeaturedNews";
 
 const alert = r2wc(FormAlert, {
   shadow: "closed",
@@ -41,10 +42,12 @@ const upcomingCollections = r2wc(UpcomingBinCollections, {
     uprn: "string",
     sid: "string"
   }
-})
+});
+const featuredNewsItems = r2wc(FeaturedNews);
 
 customElements.define("alert-component", alert);
 customElements.define("sign-in-register", signInRegister);
 customElements.define("image-card", cardImage);
 customElements.define("top-tasks", topTasks);
 customElements.define("bin-collections", upcomingCollections);
+customElements.define("featured-news", featuredNewsItems);

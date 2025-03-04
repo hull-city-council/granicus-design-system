@@ -27,4 +27,17 @@ async function getUpcomingBinCollections(sid, uprn) {
       }
 }
 
-export { getUpcomingBinCollections }
+async function getFeaturedNewsItems() {
+  try {
+      const response = await fetch("https://hull-city-council.github.io/featured-news-flat-data/featured-news.json", {
+          method: "GET"
+      });
+      const data = await response.json();
+      return data[0].news_items[0];
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+}
+
+export { getUpcomingBinCollections, getFeaturedNewsItems }
