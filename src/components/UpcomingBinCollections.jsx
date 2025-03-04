@@ -24,7 +24,7 @@ export default function UpcomingBinCollections({ ...props }) {
 
     return (
         <>
-            {props.uprn.length > 0(
+            {props.uprn.length > 0 ? (
                 <Box sx={{ height: 400, width: "100%" }} boxShadow={1}>
                     <DataGrid
                         sx={{
@@ -79,7 +79,7 @@ export default function UpcomingBinCollections({ ...props }) {
                         loading={isLoading}
                     />
                 </Box>
-            )}
+            ) : {}}
         </>
     )
 }
