@@ -1,38 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CssVarsProvider, useTheme } from '@mui/joy/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import {
-  Card,
-  CardContent,
   Button,
-  ButtonGroup,
   Box,
   List,
   ListItem,
   ListItemButton,
   ListItemDecorator,
-  ListSubheader
+  ListSubheader,
 } from "@mui/joy";
+import { Collapse } from '@mui/material';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRightRounded';
 
 export default function TopTasks({ type, container }) {
 
+  const [tasksExpanded, setTasksExpanded] = useState(false);
+  const [accountsExpanded, setAccountsExpanded] = useState(false);
+
   const cache = useMemo(() => createCache({ container, key: "css", prepend: true }), [container]);
 
-  const theme = useTheme({
+  const joyTheme = useTheme({
     palette: {
       mode: "light"
-    },
+    }
   });
 
-  const buttonStyles = {
-    borderRadius: 99,
-    '&:hover': {
-      '& .MuiButton-endDecorator': { transform: 'translate(4px, 0px)' },
-    },
-    '& span': { transition: '0.15s' },
-  };
+  const materialTheme = createTheme();
+
 
   const tasks = [
     {
@@ -50,7 +47,16 @@ export default function TopTasks({ type, container }) {
     {
       name: "Missed bins",
       url: ""
+    },
+    {
+      name: "Missed bins",
+      url: ""
+    },
+    {
+      name: "Missed bins",
+      url: ""
     }
+
   ];
 
   const accounts = [
@@ -68,6 +74,10 @@ export default function TopTasks({ type, container }) {
     },
     {
       name: "Leisure",
+      url: ""
+    },
+    {
+      name: "Schools",
       url: ""
     },
     {
@@ -92,126 +102,132 @@ export default function TopTasks({ type, container }) {
   ];
 
   const subHeadingStyle = {
-    textTransform: "none", 
-    fontSize: "1.2rem", 
-    letterSpacing: "unset"
+    textTransform: "none",
+    fontSize: "1.2rem",
+    letterSpacing: "unset",
+    fontWeight: "bold"
   }
 
   return (
     <>
       <CacheProvider value={cache}>
-        <CssVarsProvider theme={theme}>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 2,
-              flexWrap: 'wrap',
-              '& > *': { minWidth: 0, flexBasis: 200 },
-            }}
-          >
-            <List size="lg" variant="outlined">
-              <ListSubheader sx={[{...subHeadingStyle}]} variant="soft">Tasks</ListSubheader>
-              {tasks.map((task) => {
-                return (
-                  <ListItem key={task.name} >
-                    <ListItemButton sx={{ justifyContent: "space-between" }}>
-                      {task.name}
-                      <ListItemDecorator>
-                        <KeyboardArrowRight fontSize="xl3" />
-                      </ListItemDecorator>
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
-              <ListSubheader sx={[{...subHeadingStyle}]} variant="soft">Other accounts</ListSubheader>
-              {accounts.map((account) => {
-                return (
-                  <ListItem key={account.name}>
-                    <ListItemButton sx={{ justifyContent: "space-between" }}>
-                      {account.name}
-                      <ListItemDecorator>
-                        <KeyboardArrowRight fontSize="xl3" />
-                      </ListItemDecorator>
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
-              <ListSubheader sx={[{...subHeadingStyle}]} variant="soft">Useful links</ListSubheader>
-              {links.map((link) => {
-                return (
-                  <ListItem key={link.name}>
-                    <ListItemButton sx={{ justifyContent: "space-between" }}>
-                      {link.name}
-                      <ListItemDecorator>
-                        <KeyboardArrowRight fontSize="xl3" />
-                      </ListItemDecorator>
-                    </ListItemButton>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </Box>
-
-          {/* <Card variant="plain">
-            <CardContent sx={{ justifyContent: "center" }}>
-              <ButtonGroup
-                variant="outlined"
-                orientation="vertical"
-                aria-label="vertical outlined button group"
-                spacing="0.5rem"
+        <CssVarsProvider theme={joyTheme}>
+          <ThemeProvider theme={materialTheme}>
+            <Collapse in={tasksExpanded} collapsedSize={240} sx={{ position: 'relative',  fontFamily: '"Arial", "sans-serif"' }}>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                  '& > *': { minWidth: 0, flexBasis: 200 },
+                }}
               >
-                {type === "business" ? (
-                  <>
-                    <Button
-                      size="lg"
-                      key="one"
-                      endDecorator={<KeyboardArrowRight fontSize="xl3" />}
-                    >
-                      Business rates
-                    </Button>
-                    <Button
-                      size="lg"
-                      key="two"
-                      endDecorator={<KeyboardArrowRight fontSize="xl3" />}
-                    >
-                      Commercial waste
-                    </Button>
-                    <Button
-                      size="lg"
-                      key="three"
-                      endDecorator={<KeyboardArrowRight fontSize="xl3" />}
-                    >
-                      Business support
-                    </Button>
-                  </>
-                ) : type === "resident" ? (
-                  <>
-                    {tasks.map((task) => {
-                      return (<Button
-                        size="lg"
-                        key="one"
-                        endDecorator={<KeyboardArrowRight fontSize="xl3" />}
-                        sx={[
-                          { ...buttonStyles }
-                        ]}
-                      >
-                        {task.name}
-                      </Button>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <>
-                    <Button loading loadingPosition="start" color="primary">
-                      Loading...
-                    </Button>
-                  </>
-                )}
-              </ButtonGroup>
-            </CardContent>
-          </Card> */}
+                <List size="lg">
+                  <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Tasks</ListSubheader>
+                  {tasks.map((task) => {
+                    return (
+                      <ListItem key={task.name} >
+                        <ListItemButton sx={{ justifyContent: "space-between" }}>
+                          {task.name}
+                          <ListItemDecorator>
+                            <KeyboardArrowRight fontSize="xl3" />
+                          </ListItemDecorator>
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Box>
+              <Box sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: tasksExpanded ? 0 : 70,
+                background: 'linear-gradient(to bottom, transparent, white)'
+              }}></Box>
+            </Collapse>
+            <Box sx={{
+              marginTop: -5,
+              width: '100%',
+              display: tasksExpanded ? 'none' : 'flex',
+              justifyContent: 'center',
+            }}>
+              <Button onClick={() => setTasksExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, }}>View more</Button>
+            </Box>
+            <Collapse in={accountsExpanded} collapsedSize={240} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                  '& > *': { minWidth: 0, flexBasis: 200 },
+                }}
+              >
+                <List size="lg">
+                  <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Other accounts</ListSubheader>
+                  {accounts.map((account) => {
+                    return (
+                      <ListItem key={account.name}>
+                        <ListItemButton sx={{ justifyContent: "space-between" }}>
+                          {account.name}
+                          <ListItemDecorator>
+                            <KeyboardArrowRight fontSize="xl3" />
+                          </ListItemDecorator>
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Box>
+              <Box sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: accountsExpanded ? 0 : 70,
+                background: 'linear-gradient(to bottom, transparent, white)'
+              }}></Box>
+            </Collapse>
+            <Box sx={{
+              marginTop: -5,
+              width: '100%',
+              display: accountsExpanded ? 'none' : 'flex',
+              justifyContent: 'center',
+            }}>
+              <Button onClick={() => setAccountsExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12 }}>View more</Button>
+            </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                  '& > *': { minWidth: 0, flexBasis: 200 },
+                }}
+              >
+                <List size="lg" sx={{ fontFamily: '"Arial", "sans-serif"' }}>
+                  <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Useful links</ListSubheader>
+                  {links.map((link) => {
+                    return (
+                      <ListItem key={link.name}>
+                        <ListItemButton sx={{ justifyContent: "space-between" }}>
+                          {link.name}
+                          <ListItemDecorator>
+                            <KeyboardArrowRight fontSize="xl3" />
+                          </ListItemDecorator>
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Box>
+          </ThemeProvider>
         </CssVarsProvider>
       </CacheProvider>
     </>

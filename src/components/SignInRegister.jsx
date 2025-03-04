@@ -110,6 +110,7 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
                 size="lg"
                 component="a"
                 href={registerurl}
+                sx={{borderRadius: 12}}
               >
                 Sign up
               </Button>
