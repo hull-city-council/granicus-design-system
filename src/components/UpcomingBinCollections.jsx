@@ -20,11 +20,11 @@ export default function UpcomingBinCollections({ ...props }) {
             }
             fetchCollectionData();
         }
-    }, [props.uprn])
+    }, [props.sid, props.uprn])
 
     return (
         <>
-            {props.sid && props.uprn.length > 0(
+            {props.uprn.length > 0(
                 <Box sx={{ height: 400, width: "100%" }} boxShadow={1}>
                     <DataGrid
                         sx={{
