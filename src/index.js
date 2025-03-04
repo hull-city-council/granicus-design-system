@@ -2,6 +2,7 @@ import r2wc from "@r2wc/react-to-web-component";
 import FormAlert from "./components/FormAlert";
 import SignInRegister from "./components/SignInRegister";
 import ImageCard from "./components/ImageCard";
+import UpcomingBinCollections from "./components/UpcomingBinCollections";
 import TopTasks from "./components/TopTasks";
 
 const alert = r2wc(FormAlert, {
@@ -35,7 +36,14 @@ const topTasks = r2wc(TopTasks, {
   },
 });
 
+const upcomingCollections = r2wc(UpcomingBinCollections, {
+  props: {
+    uprn: "string"
+  }
+})
+
 customElements.define("alert-component", alert);
 customElements.define("sign-in-register", signInRegister);
 customElements.define("image-card", cardImage);
 customElements.define("top-tasks", topTasks);
+customElements.define("bin-collections", upcomingCollections);
