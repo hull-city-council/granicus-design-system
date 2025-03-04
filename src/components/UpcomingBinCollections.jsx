@@ -9,14 +9,12 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { getUpcomingBinCollections } from "../lookups";
 
 export default function UpcomingBinCollections({ ...props }) {
-
-    const sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref?.session['auth-session'] : void 0 : void 0;
     const [tableData, setTableData] = useState();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        if (sid && props.uprn) {
+        if (props.sid && props.uprn) {
             async function fetchCollectionData() {
-                const collectionData = await getUpcomingBinCollections(sid, props.uprn);
+                const collectionData = await getUpcomingBinCollections(props.sid, props.uprn);
                 setTableData(collectionData);
                 setIsLoading(false);
             }
@@ -26,7 +24,7 @@ export default function UpcomingBinCollections({ ...props }) {
 
     return (
         <>
-            {props.uprn.length > 0(
+            {props.sid && props.uprn.length > 0(
                 <Box sx={{ height: 400, width: "100%" }} boxShadow={1}>
                     <DataGrid
                         sx={{

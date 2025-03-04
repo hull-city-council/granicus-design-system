@@ -38,7 +38,8 @@ const topTasks = r2wc(TopTasks, {
 
 const upcomingCollections = r2wc(UpcomingBinCollections, {
   props: {
-    uprn: "string"
+    uprn: "string",
+    sid: "string"
   }
 })
 
