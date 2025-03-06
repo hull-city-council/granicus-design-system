@@ -96,7 +96,7 @@ export default function UpcomingBinCollections({ ...props }) {
                 </Alert>
             )}
             {props.uprn.length > 0 ? (
-                <Box sx={{ height: 400, width: "100%" }} boxShadow={1}>
+                <Box sx={{ width: "100%" }} boxShadow={1}>
                     <DataGrid
                         sx={{
                             ".MuiDataGrid-columnHeaderTitle": {
