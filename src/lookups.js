@@ -40,4 +40,36 @@ async function getFeaturedNewsItems() {
   }
 }
 
-export { getUpcomingBinCollections, getFeaturedNewsItems }
+async function SubscribeToCollectionEmails(form, uprn) {
+  try {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&id=67c9d29ad8d54&sid=" + sid, {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        formValues: {
+          Section1: {}
+        },
+        tokens: {
+          email: form.email,
+          send_at: form.send_at,
+          send_on: form.send_on,
+          uprn: uprn
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        let responsePayload = JSON.parse(data.integration.transformed.rows_data[0].response);
+        console.log(responsePayload);
+        return responsePayload;
+      });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { getUpcomingBinCollections, getFeaturedNewsItems, SubscribeToCollectionEmails }

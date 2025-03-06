@@ -16,7 +16,7 @@ import Alert from "@mui/joy/Alert";
 import { Box, LinearProgress, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import { getUpcomingBinCollections } from "../lookups";
+import { getUpcomingBinCollections, SubscribeToCollectionEmails } from "../lookups";
 import { Checkbox, FormControl, FormHelperText, FormLabel, Switch, Select, Option, Button } from "@mui/joy";
 
 export default function UpcomingBinCollections({ ...props }) {
@@ -26,6 +26,8 @@ export default function UpcomingBinCollections({ ...props }) {
     const [isSubscribedToReminders, setIsSubscribedToReminders] = useState();
     const [reminderOn, setReminderOn] = useState();
     const [reminderTime, setReminderTime] = useState(null);
+    const [subscribeButtonDisabledState, setSubscribeButtonDisabledState] = useState(false);
+    const [subScribeButtonLoading, setSubScribeButtonLoading] = useState(false);
 
     const reminderTimes = {
         before: [
@@ -71,7 +73,31 @@ export default function UpcomingBinCollections({ ...props }) {
         }
     }, [props.sid, props.uprn])
 
-    console.log(reminderOn);
+    async function subscribe(event, uprn) {
+        event.preventDefault();
+        setSubscribeButtonDisabledState(true);
+        setSubScribeButtonLoading(true);
+    
+        try {
+            const formData = new FormData(event.currentTarget);
+            const formJson = Object.fromEntries(formData.entries());
+            const response = await SubscribeToCollectionEmails(formJson, uprn);
+    
+            if (!response.ok) {
+                throw new Error('Subscription failed');
+            }
+    
+            const subscribeButton = event.currentTarget.querySelector('button[type="submit"]');
+            if (subscribeButton) {
+                subscribeButton.remove();
+            }
+        } catch (error) {
+            // On error - reset states and show alert
+            setSubscribeButtonDisabledState(false);
+            setSubScribeButtonLoading(false);
+            alert('Failed to subscribe to collection emails. Please try again.');
+        }
+    }
 
     return (
         <>
@@ -99,6 +125,8 @@ export default function UpcomingBinCollections({ ...props }) {
                 <Box sx={{ width: "100%" }} boxShadow={1}>
                     <DataGrid
                         sx={{
+                            background: "#fff",
+                            height: "500px",
                             ".MuiDataGrid-columnHeaderTitle": {
                                 fontWeight: "bold !important",
                                 overflow: "visible !important",
@@ -181,49 +209,52 @@ export default function UpcomingBinCollections({ ...props }) {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Stack spacing={1.5}>
-                                    <FormControl orientation="horizontal" sx={{ gap: 1 }}>
-                                        <FormLabel>Weekly email reminder</FormLabel>
-                                        <Switch size="lg" color="danger" variant="soft" onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
-                                    </FormControl>
-                                    {isSubscribedToReminders && (
-                                        <>
-                                            <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
-                                                Remind me
-                                            </FormLabel>
-                                            <Select id="select-field-send-on" onChange={(event, newValue) => setReminderOn(newValue)}>
-                                                <Option value={1}>The day before the collection</Option>
-                                                <Option value={0}>On the day of collection</Option>
-                                            </Select>
+                                    <form onSubmit={(event) => subscribe(event, uprn)}>
+                                        <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                            <FormLabel>Weekly email reminder</FormLabel>
+                                            <Switch size="lg" color="danger" variant="soft" onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                        </FormControl>
+                                        {isSubscribedToReminders && (
+                                            <>
+                                                <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
+                                                    Remind me
+                                                </FormLabel>
+                                                <FormLabel>Email address</FormLabel>
+                                                <Input id="input-field-email" name="email" size="lg" value={props.email} type="email" />
+                                                <Select id="select-field-send-on" name="send_on" onChange={(event, newValue) => setReminderOn(newValue)}>
+                                                    <Option value={1}>The day before the collection</Option>
+                                                    <Option value={0}>On the day of collection</Option>
+                                                </Select>
 
-                                            {reminderOn !== null && reminderOn !== undefined && (
-                                                <>
-                                                    <FormLabel id="select-field-time-label" htmlFor="select-field-time">
-                                                        Send at
-                                                    </FormLabel>
-                                                    <Select id="select-field-time" onChange={(event, newValue) => setReminderTime(newValue)}>
-                                                        {reminderOn === 1
-                                                            ? reminderTimes.before.map(time => (
-                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                            ))
-                                                            : reminderTimes.onTheDay.map(time => (
-                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                            ))
-                                                        }
-                                                    </Select>
-                                                </>
-                                            )}
+                                                {reminderOn !== null && reminderOn !== undefined && (
+                                                    <>
+                                                        <FormLabel id="select-field-time-label" htmlFor="select-field-time">
+                                                            Send at
+                                                        </FormLabel>
+                                                        <Select id="select-field-time" name="send_at" onChange={(event, newValue) => setReminderTime(newValue)}>
+                                                            {reminderOn === 1
+                                                                ? reminderTimes.before.map(time => (
+                                                                    <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                ))
+                                                                : reminderTimes.onTheDay.map(time => (
+                                                                    <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                ))
+                                                            }
+                                                        </Select>
+                                                    </>
+                                                )}
 
-                                            {reminderTime && (
-                                                <Button size="lg" color="danger">Subscribe</Button>
-                                            )}
-                                        </>
-                                    )}
+                                                {reminderTime && (
+                                                    <Button loading={subScribeButtonLoading} disabled={subscribeButtonDisabledState} size="lg" color="danger" type="submit">Subscribe</Button>
+                                                )}
+                                            </>
+                                        )}
 
-                                    {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                        {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                 <FormLabel>Collection issues</FormLabel>
                                 <Switch size="sm" />
                             </FormControl> */}
-
+                                    </form>
                                 </Stack>
                             </AccordionDetails>
                         </Accordion>

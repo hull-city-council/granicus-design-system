@@ -40,7 +40,8 @@ const topTasks = r2wc(TopTasks, {
 const upcomingCollections = r2wc(UpcomingBinCollections, {
   props: {
     uprn: "string",
-    sid: "string"
+    sid: "string",
+    email: "string"
   }
 });
 const featuredNewsItems = r2wc(FeaturedNews);
