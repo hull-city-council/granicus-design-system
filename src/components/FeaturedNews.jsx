@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/joy/styles';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -23,11 +23,13 @@ export default function FeaturedNews() {
         '& span': { transition: '0.15s' },
     };
 
-    async function getNewsItems() {
-        const newsData = await getFeaturedNewsItems();
-        setNewsData(newsData);
-    }
-    getNewsItems();
+    useEffect(() => {
+        async function getNewsItems() {
+            const newsData = await getFeaturedNewsItems();
+            setNewsData(newsData);
+        }
+        getNewsItems();
+    }, []);
 
     return (
         <>
