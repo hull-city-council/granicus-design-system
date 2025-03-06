@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from "react";
+import AccordionGroup from '@mui/joy/AccordionGroup';
+import Accordion from '@mui/joy/Accordion';
+import AccordionDetails, {
+    accordionDetailsClasses,
+} from '@mui/joy/AccordionDetails';
+import AccordionSummary, {
+    accordionSummaryClasses,
+} from '@mui/joy/AccordionSummary';
+import ListItemContent from '@mui/joy/ListItemContent';
 import { DataGrid } from "@mui/x-data-grid";
 import Avatar from "@mui/joy/Avatar";
 import Typography from "@mui/joy/Typography";
@@ -6,12 +15,37 @@ import ReportIcon from "@mui/icons-material/Report";
 import Alert from "@mui/joy/Alert";
 import { Box, LinearProgress, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import { getUpcomingBinCollections } from "../lookups";
+import { Checkbox, FormControl, FormHelperText, FormLabel, Switch, Select, Option, Button } from "@mui/joy";
 
 export default function UpcomingBinCollections({ ...props }) {
     const [tableData, setTableData] = useState();
     const [eventData, setEventData] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubscribedToReminders, setIsSubscribedToReminders] = useState();
+    const [reminderOn, setReminderOn] = useState();
+    const [reminderTime, setReminderTime] = useState(null);
+
+    const reminderTimes = {
+        before: [
+            { text: '4pm', value: '16:00:00' },
+            { text: '5pm', value: '17:00:00' },
+            { text: '6pm', value: '18:00:00' },
+            { text: '7pm', value: '19:00:00' },
+            { text: '8pm', value: '20:00:00' },
+            { text: '9pm', value: '21:00:00' },
+            { text: '10pm', value: '22:00:00' },
+            { text: '11pm', value: '23:00:00' }
+        ],
+        onTheDay: [
+            { text: '4am', value: '04:00:00' },
+            { text: '5am', value: '05:00:00' },
+            { text: '6am', value: '06:00:00' },
+            { text: '7am', value: '07:00:00' }
+        ]
+    };
+
     useEffect(() => {
         if (props.sid && props.uprn) {
             async function fetchCollectionData() {
@@ -36,6 +70,8 @@ export default function UpcomingBinCollections({ ...props }) {
             fetchCollectionData();
         }
     }, [props.sid, props.uprn])
+
+    console.log(reminderOn);
 
     return (
         <>
@@ -68,7 +104,7 @@ export default function UpcomingBinCollections({ ...props }) {
                                 overflow: "visible !important",
                             },
                             '& .MuiLinearProgress-bar': {
-                              backgroundColor: '#C41C1C'
+                                backgroundColor: '#C41C1C'
                             }
                         }}
                         rows={tableData}
@@ -115,8 +151,83 @@ export default function UpcomingBinCollections({ ...props }) {
                         slots={{
                             loadingOverlay: LinearProgress,
                         }}
-                        loading={isLoading} 
+                        loading={isLoading}
                     />
+                    <AccordionGroup
+                        variant="plain"
+                        transition="0.2s"
+                        sx={{
+                            borderRadius: 'md',
+                            [`& .${accordionDetailsClasses.content}.${accordionDetailsClasses.expanded}`]:
+                            {
+                                paddingBlock: '1rem',
+                            },
+                            [`& .${accordionSummaryClasses.button}`]: {
+                                paddingBlock: '1rem',
+                            },
+                        }}
+                    >
+                        <Accordion>
+                            <AccordionSummary>
+                                <Avatar color="danger">
+                                    <MarkEmailUnreadIcon />
+                                </Avatar>
+                                <ListItemContent>
+                                    <Typography level="title-md">Email preferences</Typography>
+                                    <Typography level="body-sm">
+                                        Subscribe to weekly reminder emails
+                                    </Typography>
+                                </ListItemContent>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Stack spacing={1.5}>
+                                    <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                        <FormLabel>Weekly email reminder</FormLabel>
+                                        <Switch size="lg" color="danger" variant="soft" onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                    </FormControl>
+                                    {isSubscribedToReminders && (
+                                        <>
+                                            <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
+                                                Remind me
+                                            </FormLabel>
+                                            <Select id="select-field-send-on" onChange={(event, newValue) => setReminderOn(newValue)}>
+                                                <Option value={1}>The day before the collection</Option>
+                                                <Option value={0}>On the day of collection</Option>
+                                            </Select>
+
+                                            {reminderOn !== null && reminderOn !== undefined && (
+                                                <>
+                                                    <FormLabel id="select-field-time-label" htmlFor="select-field-time">
+                                                        Send at
+                                                    </FormLabel>
+                                                    <Select id="select-field-time" onChange={(event, newValue) => setReminderTime(newValue)}>
+                                                        {reminderOn === 1
+                                                            ? reminderTimes.before.map(time => (
+                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                            ))
+                                                            : reminderTimes.onTheDay.map(time => (
+                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </>
+                                            )}
+
+                                            {reminderTime && (
+                                                <Button size="lg" color="danger">Subscribe</Button>
+                                            )}
+                                        </>
+                                    )}
+
+                                    {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                <FormLabel>Collection issues</FormLabel>
+                                <Switch size="sm" />
+                            </FormControl> */}
+
+                                </Stack>
+                            </AccordionDetails>
+                        </Accordion>
+                    </AccordionGroup>
                 </Box>
             ) : {}}
         </>
