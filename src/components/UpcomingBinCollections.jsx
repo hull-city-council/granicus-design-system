@@ -73,7 +73,7 @@ export default function UpcomingBinCollections({ ...props }) {
         }
     }, [props.sid, props.uprn])
 
-    async function subscribe(event, uprn) {
+    async function subscribe(event, uprn, ucrn) {
         event.preventDefault();
         setIsStateDisabled(true);
         setSubScribeButtonLoading(true);
@@ -81,7 +81,7 @@ export default function UpcomingBinCollections({ ...props }) {
         try {
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(formData.entries());
-            const response = await SubscribeToCollectionEmails(formJson, uprn);
+            const response = await SubscribeToCollectionEmails(formJson, uprn, ucrn);
 
             if (response.status != 200) {
                 throw new Error('Subscription failed');
@@ -213,7 +213,7 @@ export default function UpcomingBinCollections({ ...props }) {
                             </AccordionSummary>
                             <AccordionDetails>
 
-                                <form onSubmit={(event) => subscribe(event, props.uprn)}>
+                                <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
                                     <Stack spacing={1.5}>
                                         <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                             <FormLabel>Weekly email reminder</FormLabel>

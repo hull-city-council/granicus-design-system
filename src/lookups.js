@@ -40,7 +40,7 @@ async function getFeaturedNewsItems() {
   }
 }
 
-async function SubscribeToCollectionEmails(form, uprn) {
+async function SubscribeToCollectionEmails(form, uprn, ucrn) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&id=67c9d29ad8d54&sid=" + sid, {
       method: "POST",
@@ -57,7 +57,8 @@ async function SubscribeToCollectionEmails(form, uprn) {
           email: form.email,
           send_at: form.send_at,
           send_on: form.send_on,
-          uprn: uprn
+          uprn: uprn,
+          ucrn: ucrn
         }
       })
     })

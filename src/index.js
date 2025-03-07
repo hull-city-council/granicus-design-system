@@ -41,7 +41,8 @@ const upcomingCollections = r2wc(UpcomingBinCollections, {
   props: {
     uprn: "string",
     sid: "string",
-    email: "string"
+    email: "string",
+    ucrn: "string"
   }
 });
 const featuredNewsItems = r2wc(FeaturedNews);
