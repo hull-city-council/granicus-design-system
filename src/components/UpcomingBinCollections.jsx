@@ -213,7 +213,7 @@ export default function UpcomingBinCollections({ ...props }) {
                                 </ListItemContent>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {props.uuid.length === 0 ? (
+                                {!props.uuid ? (
                                     <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
                                         <Stack spacing={1.5}>
                                             <FormControl orientation="horizontal" sx={{ gap: 1 }}>
@@ -277,8 +277,6 @@ export default function UpcomingBinCollections({ ...props }) {
                                 )
 
                                 }
-
-
                             </AccordionDetails>
                         </Accordion>
                     </AccordionGroup>
