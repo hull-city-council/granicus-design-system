@@ -83,19 +83,24 @@ export default function UpcomingBinCollections({ ...props }) {
             const formJson = Object.fromEntries(formData.entries());
             const response = await SubscribeToCollectionEmails(formJson, uprn);
 
-            if (!response.ok) {
+            if (response.status != 200) {
                 throw new Error('Subscription failed');
             }
 
-            const subscribeButton = event.currentTarget.querySelector('button[type="submit"]');
-            if (subscribeButton) {
-                subscribeButton.remove();
-            }
+            PNotify.info({
+                title: 'Confirm your subscription',
+                text: 'We have emailed you, please confirm your email address.'
+              });
+
+            setSubscribeButtonDisabledState(true);
         } catch (error) {
             // On error - reset states and show alert
             setSubscribeButtonDisabledState(false);
             setSubScribeButtonLoading(false);
-            alert('Failed to subscribe to collection emails. Please try again.');
+            PNotify.error({
+                title: 'Failed to subscribe',
+                text: 'Please try again later.'
+              });
         }
     }
 
@@ -126,7 +131,7 @@ export default function UpcomingBinCollections({ ...props }) {
                     <DataGrid
                         sx={{
                             background: "#fff",
-                            height: "500px",
+                            height: "265px",
                             ".MuiDataGrid-columnHeaderTitle": {
                                 fontWeight: "bold !important",
                                 overflow: "visible !important",

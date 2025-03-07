@@ -65,6 +65,7 @@ export default function FeaturedNews() {
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                                 <Button
                                     component="a"
+                                    target="_blank"
                                     href={newsData.link_url}
                                     endDecorator={<ArrowForwardIcon fontSize="md" />}
                                     sx={{ ...buttonStyles }}
