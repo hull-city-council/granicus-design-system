@@ -209,7 +209,7 @@ export default function UpcomingBinCollections({ ...props }) {
                             </AccordionSummary>
                             <AccordionDetails>
 
-                                <form onSubmit={(event) => subscribe(event, uprn)}>
+                                <form onSubmit={(event) => subscribe(event, props.uprn)}>
                                     <Stack spacing={1.5}>
                                         <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                             <FormLabel>Weekly email reminder</FormLabel>
