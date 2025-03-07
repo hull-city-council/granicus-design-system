@@ -16,6 +16,7 @@ import Alert from "@mui/joy/Alert";
 import { Box, LinearProgress, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import DoneIcon from '@mui/icons-material/Done';
 import { getUpcomingBinCollections, SubscribeToCollectionEmails } from "../lookups";
 import { FormControl, FormLabel, Switch, Select, Option, Button, Input } from "@mui/joy";
 
@@ -90,7 +91,7 @@ export default function UpcomingBinCollections({ ...props }) {
             PNotify.info({
                 title: 'Confirm your subscription',
                 text: 'We have emailed you, please confirm your email address.'
-              });
+            });
 
             setIsStateDisabled(true);
             setSubScribeButtonLoading(false);
@@ -101,7 +102,7 @@ export default function UpcomingBinCollections({ ...props }) {
             PNotify.error({
                 title: 'Failed to subscribe',
                 text: 'Please try again later.'
-              });
+            });
         }
     }
 
@@ -212,56 +213,71 @@ export default function UpcomingBinCollections({ ...props }) {
                                 </ListItemContent>
                             </AccordionSummary>
                             <AccordionDetails>
+                                {props.uuid.length === 0 ? (
+                                    <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
+                                        <Stack spacing={1.5}>
+                                            <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                                <FormLabel>Weekly email reminder</FormLabel>
+                                                <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                            </FormControl>
+                                            {isSubscribedToReminders && (
+                                                <>
 
-                                <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
-                                    <Stack spacing={1.5}>
-                                        <FormControl orientation="horizontal" sx={{ gap: 1 }}>
-                                            <FormLabel>Weekly email reminder</FormLabel>
-                                            <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
-                                        </FormControl>
-                                        {isSubscribedToReminders && (
-                                            <>
+                                                    <FormLabel>Email address</FormLabel>
+                                                    <Input id="input-field-email" name="email" disabled={true} size="lg" value={props.email} type="email" />
+                                                    <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
+                                                        Remind me
+                                                    </FormLabel>
+                                                    <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
+                                                        <Option value={1}>The day before the collection</Option>
+                                                        <Option value={0}>On the day of collection</Option>
+                                                    </Select>
 
-                                                <FormLabel>Email address</FormLabel>
-                                                <Input id="input-field-email" name="email" disabled={true} size="lg" value={props.email} type="email" />
-                                                <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
-                                                    Remind me
-                                                </FormLabel>
-                                                <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
-                                                    <Option value={1}>The day before the collection</Option>
-                                                    <Option value={0}>On the day of collection</Option>
-                                                </Select>
+                                                    {reminderOn !== null && reminderOn !== undefined && (
+                                                        <>
+                                                            <FormLabel id="select-field-time-label" htmlFor="select-field-time">
+                                                                Send at
+                                                            </FormLabel>
+                                                            <Select id="select-field-time" name="send_at" placeholder="Select a time..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
+                                                                {reminderOn === 1
+                                                                    ? reminderTimes.before.map(time => (
+                                                                        <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                    ))
+                                                                    : reminderTimes.onTheDay.map(time => (
+                                                                        <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                    ))
+                                                                }
+                                                            </Select>
+                                                        </>
+                                                    )}
 
-                                                {reminderOn !== null && reminderOn !== undefined && (
-                                                    <>
-                                                        <FormLabel id="select-field-time-label" htmlFor="select-field-time">
-                                                            Send at
-                                                        </FormLabel>
-                                                        <Select id="select-field-time" name="send_at" placeholder="Select a time..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
-                                                            {reminderOn === 1
-                                                                ? reminderTimes.before.map(time => (
-                                                                    <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                                ))
-                                                                : reminderTimes.onTheDay.map(time => (
-                                                                    <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                                ))
-                                                            }
-                                                        </Select>
-                                                    </>
-                                                )}
+                                                    {reminderTime && (
+                                                        <Button fullWidth loading={subScribeButtonLoading} disabled={isStateDisabled} size="lg" color="danger" type="submit">{isStateDisabled ? "Email sent" : "Subscribe"}</Button>
+                                                    )}
+                                                </>
+                                            )}
 
-                                                {reminderTime && (
-                                                    <Button fullWidth loading={subScribeButtonLoading} disabled={isStateDisabled} size="lg" color="danger" type="submit">{isStateDisabled ? "Email sent" : "Subscribe"}</Button>
-                                                )}
-                                            </>
-                                        )}
-
-                                        {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                            {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                 <FormLabel>Collection issues</FormLabel>
                                 <Switch size="sm" />
                             </FormControl> */}
-                                    </Stack>
-                                </form>
+                                        </Stack>
+                                    </form>
+                                ) : (
+                                    <Alert
+                                        sx={{ alignItems: "flex-start", mb: 3 }}
+                                        startDecorator={<DoneIcon />}
+                                        variant="soft"
+                                        color="success"
+                                    >
+                                        <div>
+                                            You are subscribed to receive weekly bin reminders. <a href={`https://prod-248.westeurope.logic.azure.com/workflows/fb257102e10f4f8f9bbd84a2d3f78716/triggers/manual/paths/invoke/uuid/${props.uuid}?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v2Mt8VwmaoqE63MjjnTSNqn8CR7P3HKcinwaz68d6D8`} title="unsubscribe to bin collection reminders">Unsubscribe</a>
+                                        </div>
+                                    </Alert>
+                                )
+
+                                }
+
 
                             </AccordionDetails>
                         </Accordion>

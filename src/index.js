@@ -42,7 +42,8 @@ const upcomingCollections = r2wc(UpcomingBinCollections, {
     uprn: "string",
     sid: "string",
     email: "string",
-    ucrn: "string"
+    ucrn: "string",
+    uuid: "string"
   }
 });
 const featuredNewsItems = r2wc(FeaturedNews);
