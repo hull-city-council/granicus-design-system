@@ -136,11 +136,9 @@ export default function UpcomingBinCollections({ ...props }) {
                             ".MuiDataGrid-columnHeaderTitle": {
                                 fontWeight: "bold !important",
                                 overflow: "visible !important",
-                            },
-                            "MuiToolbar-root": {
-                                display: "none"
                             }
                         }}
+                        hideFooter={true}
                         rows={tableData}
                         disableColumnMenu
                         columns={[
