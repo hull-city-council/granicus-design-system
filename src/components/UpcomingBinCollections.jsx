@@ -26,7 +26,7 @@ export default function UpcomingBinCollections({ ...props }) {
     const [isSubscribedToReminders, setIsSubscribedToReminders] = useState();
     const [reminderOn, setReminderOn] = useState();
     const [reminderTime, setReminderTime] = useState(null);
-    const [subscribeButtonDisabledState, setSubscribeButtonDisabledState] = useState(false);
+    const [isStateDisabled, setIsStateDisabled] = useState(false);
     const [subScribeButtonLoading, setSubScribeButtonLoading] = useState(false);
 
     const reminderTimes = {
@@ -75,7 +75,7 @@ export default function UpcomingBinCollections({ ...props }) {
 
     async function subscribe(event, uprn) {
         event.preventDefault();
-        setSubscribeButtonDisabledState(true);
+        setIsStateDisabled(true);
         setSubScribeButtonLoading(true);
 
         try {
@@ -92,10 +92,11 @@ export default function UpcomingBinCollections({ ...props }) {
                 text: 'We have emailed you, please confirm your email address.'
               });
 
-            setSubscribeButtonDisabledState(true);
+            setIsStateDisabled(true);
+            setSubScribeButtonLoading(false);
         } catch (error) {
             // On error - reset states and show alert
-            setSubscribeButtonDisabledState(false);
+            setIsStateDisabled(false);
             setSubScribeButtonLoading(false);
             PNotify.error({
                 title: 'Failed to subscribe',
@@ -218,17 +219,17 @@ export default function UpcomingBinCollections({ ...props }) {
                                     <Stack spacing={1.5}>
                                         <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                             <FormLabel>Weekly email reminder</FormLabel>
-                                            <Switch size="lg" color="danger" variant="soft" onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                            <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
                                         </FormControl>
                                         {isSubscribedToReminders && (
                                             <>
 
                                                 <FormLabel>Email address</FormLabel>
-                                                <Input id="input-field-email" name="email" size="lg" value={props.email} type="email" />
+                                                <Input id="input-field-email" name="email" disabled={true} size="lg" value={props.email} type="email" />
                                                 <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
                                                     Remind me
                                                 </FormLabel>
-                                                <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
+                                                <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
                                                     <Option value={1}>The day before the collection</Option>
                                                     <Option value={0}>On the day of collection</Option>
                                                 </Select>
@@ -238,7 +239,7 @@ export default function UpcomingBinCollections({ ...props }) {
                                                         <FormLabel id="select-field-time-label" htmlFor="select-field-time">
                                                             Send at
                                                         </FormLabel>
-                                                        <Select id="select-field-time" name="send_at" placeholder="Select a time..." size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
+                                                        <Select id="select-field-time" name="send_at" placeholder="Select a time..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
                                                             {reminderOn === 1
                                                                 ? reminderTimes.before.map(time => (
                                                                     <Option key={time.value} value={time.value}>{time.text}</Option>
@@ -252,7 +253,7 @@ export default function UpcomingBinCollections({ ...props }) {
                                                 )}
 
                                                 {reminderTime && (
-                                                    <Button fullWidth loading={subScribeButtonLoading} disabled={subscribeButtonDisabledState} size="lg" color="danger" type="submit">Subscribe</Button>
+                                                    <Button fullWidth loading={subScribeButtonLoading} disabled={isStateDisabled} size="lg" color="danger" type="submit">{isStateDisabled ? "Email sent" : "Subscribe"}</Button>
                                                 )}
                                             </>
                                         )}
