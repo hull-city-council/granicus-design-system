@@ -137,8 +137,8 @@ export default function UpcomingBinCollections({ ...props }) {
                                 fontWeight: "bold !important",
                                 overflow: "visible !important",
                             },
-                            '& .MuiLinearProgress-bar': {
-                                backgroundColor: '#C41C1C'
+                            "MuiToolbar-root": {
+                                display: "none"
                             }
                         }}
                         rows={tableData}
