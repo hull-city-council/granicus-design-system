@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Alert, Avatar, Accordion, AccordionGroup, AccordionDetails, accordionDetailsClasses, AccordionSummary, accordionSummaryClasses, ListItemContent, FormControl, FormLabel, Switch, Select, Option, Button, Input, Typography } from "@mui/joy";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from "@mui/joy/CssBaseline";
 import createCache from '@emotion/cache';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
@@ -22,7 +21,11 @@ export default function UpcomingBinCollections({ container, ...props }) {
         },
     });
 
-    const materialTheme = createTheme();
+    const materialTheme = createTheme({
+        palette: {
+            mode: "light"
+        },
+    });
 
     const cache = useMemo(() => createCache({
         container,
@@ -122,7 +125,6 @@ export default function UpcomingBinCollections({ container, ...props }) {
                 <StyledEngineProvider injectFirst>
                     <CssVarsProvider theme={joyTheme}>
                         <ThemeProvider theme={materialTheme}>
-                            <CssBaseline />
                             {eventData && (
                                 <Alert
                                     sx={{ alignItems: "flex-start", mb: 3 }}
