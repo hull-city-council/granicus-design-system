@@ -46,7 +46,9 @@ const upcomingCollections = r2wc(UpcomingBinCollections, {
     uuid: "string"
   }
 });
-const featuredNewsItems = r2wc(FeaturedNews);
+const featuredNewsItems = r2wc(FeaturedNews, {
+  shadow: "closed"
+});
 
 customElements.define("alert-component", alert);
 customElements.define("sign-in-register", signInRegister);

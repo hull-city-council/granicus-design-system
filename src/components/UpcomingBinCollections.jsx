@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from "react";
-import AccordionGroup from '@mui/joy/AccordionGroup';
-import Accordion from '@mui/joy/Accordion';
-import AccordionDetails, {
-    accordionDetailsClasses,
-} from '@mui/joy/AccordionDetails';
-import AccordionSummary, {
-    accordionSummaryClasses,
-} from '@mui/joy/AccordionSummary';
-import ListItemContent from '@mui/joy/ListItemContent';
+import React, { useState, useEffect, useMemo } from "react";
+import { Alert, Avatar, Accordion, AccordionGroup, AccordionDetails, accordionDetailsClasses, AccordionSummary, accordionSummaryClasses, ListItemContent, FormControl, FormLabel, Switch, Select, Option, Button, Input, Typography } from "@mui/joy";
+import { CssVarsProvider, useTheme } from "@mui/joy/styles";
+import CssBaseline from "@mui/joy/CssBaseline";
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import { DataGrid } from "@mui/x-data-grid";
-import Avatar from "@mui/joy/Avatar";
-import Typography from "@mui/joy/Typography";
 import ReportIcon from "@mui/icons-material/Report";
-import Alert from "@mui/joy/Alert";
 import { Box, LinearProgress, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import DoneIcon from '@mui/icons-material/Done';
+import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
+import DoneIcon from "@mui/icons-material/Done";
 import { getUpcomingBinCollections, SubscribeToCollectionEmails } from "../lookups";
-import { FormControl, FormLabel, Switch, Select, Option, Button, Input } from "@mui/joy";
 
-export default function UpcomingBinCollections({ ...props }) {
+export default function UpcomingBinCollections({ container, ...props }) {
+
+    const theme = useTheme({
+        palette: {
+            mode: "light"
+        },
+    });
+
+    const cache = useMemo(() => createCache({ container, key: "css", prepend: true }), [container]);
+
     const [tableData, setTableData] = useState();
     const [eventData, setEventData] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -108,180 +109,185 @@ export default function UpcomingBinCollections({ ...props }) {
 
     return (
         <>
-            {eventData && (
-                <Alert
-                    sx={{ alignItems: "flex-start", mb: 3 }}
-                    startDecorator={<ReportIcon />}
-                    variant="soft"
-                    color="danger"
-                >
-                    <div>
-                        <div>
-                            Missed bins on{" "}
-                            <span style={{ textTransform: "capitalize" }}>
-                                {eventData?.events.street_name}
-                            </span>
-                        </div>
-                        <Typography level="body-sm" color="danger">
-                            {eventData?.events.message}
-                        </Typography>
-                    </div>
-                </Alert>
-            )}
-            {props.uprn.length > 0 ? (
-                <Box sx={{ width: "100%" }} boxShadow={1}>
-                    <DataGrid
-                        sx={{
-                            background: "#fff",
-                            height: "265px",
-                            ".MuiDataGrid-columnHeaderTitle": {
-                                fontWeight: "bold !important",
-                                overflow: "visible !important",
-                            }
-                        }}
-                        hideFooter={true}
-                        rows={tableData}
-                        disableColumnMenu
-                        columns={[
-                            {
-                                field: "type",
-                                headerClassName: "super-app-theme--header",
-                                headerName: "Bin Colour",
-                                minWidth: 100,
-                                flex: 1,
-                                renderCell: (params) => {
-                                    const blue = params.value === "Blue Bin";
-                                    const black = params.value === "Black Bin";
-                                    const brown = params.value === "Brown Bin";
-                                    const green = params.value === "GreenCaddy";
-                                    return (
-                                        <>
-                                            <Stack direction="row" alignItems="center" spacing={1}>
-                                                <Avatar
-                                                    variant="soft"
-                                                    color={
-                                                        blue
-                                                            ? "primary"
-                                                            : black
-                                                                ? "neutral"
-                                                                : brown
-                                                                    ? "warning"
-                                                                    : green
-                                                                        ? "success"
-                                                                        : "default"
-                                                    }
-                                                >
-                                                    <DeleteOutlineIcon />
-                                                </Avatar>
-                                                <Typography level="body-md">{params.value}</Typography>
-                                            </Stack>
-                                        </>
-                                    );
-                                },
-                            },
-                            { field: "date", headerName: "Date", minWidth: 100, flex: 1 },
-                        ]}
-                        slots={{
-                            loadingOverlay: LinearProgress,
-                        }}
-                        loading={isLoading}
-                    />
-                    <AccordionGroup
-                        variant="plain"
-                        transition="0.2s"
-                        sx={{
-                            borderRadius: 'md',
-                            [`& .${accordionDetailsClasses.content}.${accordionDetailsClasses.expanded}`]:
-                            {
-                                paddingBlock: '1rem',
-                            },
-                            [`& .${accordionSummaryClasses.button}`]: {
-                                paddingBlock: '1rem',
-                            },
-                        }}
-                    >
-                        <Accordion>
-                            <AccordionSummary>
-                                <Avatar color="danger">
-                                    <MarkEmailUnreadIcon />
-                                </Avatar>
-                                <ListItemContent>
-                                    <Typography level="title-md">Email preferences</Typography>
-                                    <Typography level="body-sm">
-                                        Subscribe to weekly reminder emails
-                                    </Typography>
-                                </ListItemContent>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                {!props.uuid ? (
-                                    <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
-                                        <Stack spacing={1.5}>
-                                            <FormControl orientation="horizontal" sx={{ gap: 1 }}>
-                                                <FormLabel>Weekly email reminder</FormLabel>
-                                                <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
-                                            </FormControl>
-                                            {isSubscribedToReminders && (
+            <CacheProvider value={cache}>
+                <CssVarsProvider theme={theme}>
+                    <CssBaseline />
+                    {eventData && (
+                        <Alert
+                            sx={{ alignItems: "flex-start", mb: 3 }}
+                            startDecorator={<ReportIcon />}
+                            variant="soft"
+                            color="danger"
+                        >
+                            <div>
+                                <div>
+                                    Missed bins on{" "}
+                                    <span style={{ textTransform: "capitalize" }}>
+                                        {eventData?.events.street_name}
+                                    </span>
+                                </div>
+                                <Typography level="body-sm" color="danger">
+                                    {eventData?.events.message}
+                                </Typography>
+                            </div>
+                        </Alert>
+                    )}
+                    {props.uprn.length > 0 ? (
+                        <Box sx={{ width: "100%" }} boxShadow={1}>
+                            <DataGrid
+                                sx={{
+                                    background: "#fff",
+                                    height: "265px",
+                                    ".MuiDataGrid-columnHeaderTitle": {
+                                        fontWeight: "bold !important",
+                                        overflow: "visible !important",
+                                    }
+                                }}
+                                hideFooter={true}
+                                rows={tableData}
+                                disableColumnMenu
+                                columns={[
+                                    {
+                                        field: "type",
+                                        headerClassName: "super-app-theme--header",
+                                        headerName: "Bin Colour",
+                                        minWidth: 100,
+                                        flex: 1,
+                                        renderCell: (params) => {
+                                            const blue = params.value === "Blue Bin";
+                                            const black = params.value === "Black Bin";
+                                            const brown = params.value === "Brown Bin";
+                                            const green = params.value === "GreenCaddy";
+                                            return (
                                                 <>
-
-                                                    <FormLabel>Email address</FormLabel>
-                                                    <Input id="input-field-email" name="email" disabled={true} size="lg" value={props.email} type="email" />
-                                                    <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
-                                                        Remind me
-                                                    </FormLabel>
-                                                    <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
-                                                        <Option value={1}>The day before the collection</Option>
-                                                        <Option value={0}>On the day of collection</Option>
-                                                    </Select>
-
-                                                    {reminderOn !== null && reminderOn !== undefined && (
+                                                    <Stack direction="row" alignItems="center" spacing={1}>
+                                                        <Avatar
+                                                            variant="soft"
+                                                            color={
+                                                                blue
+                                                                    ? "primary"
+                                                                    : black
+                                                                        ? "neutral"
+                                                                        : brown
+                                                                            ? "warning"
+                                                                            : green
+                                                                                ? "success"
+                                                                                : "default"
+                                                            }
+                                                        >
+                                                            <DeleteOutlineIcon />
+                                                        </Avatar>
+                                                        <Typography level="body-md">{params.value}</Typography>
+                                                    </Stack>
+                                                </>
+                                            );
+                                        },
+                                    },
+                                    { field: "date", headerName: "Date", minWidth: 100, flex: 1 },
+                                ]}
+                                slots={{
+                                    loadingOverlay: LinearProgress,
+                                }}
+                                loading={isLoading}
+                            />
+                            <AccordionGroup
+                                variant="plain"
+                                transition="0.2s"
+                                sx={{
+                                    borderRadius: 'md',
+                                    [`& .${accordionDetailsClasses.content}.${accordionDetailsClasses.expanded}`]:
+                                    {
+                                        paddingBlock: '1rem',
+                                    },
+                                    [`& .${accordionSummaryClasses.button}`]: {
+                                        paddingBlock: '1rem',
+                                    },
+                                }}
+                            >
+                                <Accordion>
+                                    <AccordionSummary>
+                                        <Avatar color="danger">
+                                            <MarkEmailUnreadIcon />
+                                        </Avatar>
+                                        <ListItemContent>
+                                            <Typography level="title-md">Email preferences</Typography>
+                                            <Typography level="body-sm">
+                                                Subscribe to weekly reminder emails
+                                            </Typography>
+                                        </ListItemContent>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        {!props.uuid ? (
+                                            <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
+                                                <Stack spacing={1.5}>
+                                                    <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                                        <FormLabel>Weekly email reminder</FormLabel>
+                                                        <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                                    </FormControl>
+                                                    {isSubscribedToReminders && (
                                                         <>
-                                                            <FormLabel id="select-field-time-label" htmlFor="select-field-time">
-                                                                Send at
+
+                                                            <FormLabel>Email address</FormLabel>
+                                                            <Input id="input-field-email" name="email" disabled={true} size="lg" value={props.email} type="email" />
+                                                            <FormLabel id="select-field-send-on-label" htmlFor="select-field-send-on">
+                                                                Remind me
                                                             </FormLabel>
-                                                            <Select id="select-field-time" name="send_at" placeholder="Select a time..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
-                                                                {reminderOn === 1
-                                                                    ? reminderTimes.before.map(time => (
-                                                                        <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                                    ))
-                                                                    : reminderTimes.onTheDay.map(time => (
-                                                                        <Option key={time.value} value={time.value}>{time.text}</Option>
-                                                                    ))
-                                                                }
+                                                            <Select id="select-field-send-on" name="send_on" placeholder="When to send the email..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderOn(newValue)}>
+                                                                <Option value={1}>The day before the collection</Option>
+                                                                <Option value={0}>On the day of collection</Option>
                                                             </Select>
+
+                                                            {reminderOn !== null && reminderOn !== undefined && (
+                                                                <>
+                                                                    <FormLabel id="select-field-time-label" htmlFor="select-field-time">
+                                                                        Send at
+                                                                    </FormLabel>
+                                                                    <Select id="select-field-time" name="send_at" placeholder="Select a time..." disabled={isStateDisabled} size="lg" onChange={(event, newValue) => setReminderTime(newValue)}>
+                                                                        {reminderOn === 1
+                                                                            ? reminderTimes.before.map(time => (
+                                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                            ))
+                                                                            : reminderTimes.onTheDay.map(time => (
+                                                                                <Option key={time.value} value={time.value}>{time.text}</Option>
+                                                                            ))
+                                                                        }
+                                                                    </Select>
+                                                                </>
+                                                            )}
+
+                                                            {reminderTime && (
+                                                                <Button fullWidth loading={subScribeButtonLoading} disabled={isStateDisabled} size="lg" color="danger" type="submit">{isStateDisabled ? "Email sent" : "Subscribe"}</Button>
+                                                            )}
                                                         </>
                                                     )}
 
-                                                    {reminderTime && (
-                                                        <Button fullWidth loading={subScribeButtonLoading} disabled={isStateDisabled} size="lg" color="danger" type="submit">{isStateDisabled ? "Email sent" : "Subscribe"}</Button>
-                                                    )}
-                                                </>
-                                            )}
-
-                                            {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
+                                                    {/* <FormControl orientation="horizontal" sx={{ gap: 1 }}>
                                 <FormLabel>Collection issues</FormLabel>
                                 <Switch size="sm" />
                             </FormControl> */}
-                                        </Stack>
-                                    </form>
-                                ) : (
-                                    <Alert
-                                        sx={{ alignItems: "flex-start", mb: 3 }}
-                                        startDecorator={<DoneIcon />}
-                                        variant="soft"
-                                        color="success"
-                                    >
-                                        <div>
-                                            You are subscribed to receive weekly bin reminders. <a href={`https://prod-248.westeurope.logic.azure.com/workflows/fb257102e10f4f8f9bbd84a2d3f78716/triggers/manual/paths/invoke/uuid/${props.uuid}?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v2Mt8VwmaoqE63MjjnTSNqn8CR7P3HKcinwaz68d6D8`} title="unsubscribe to bin collection reminders">Unsubscribe</a>
-                                        </div>
-                                    </Alert>
-                                )
+                                                </Stack>
+                                            </form>
+                                        ) : (
+                                            <Alert
+                                                sx={{ alignItems: "flex-start", mb: 3 }}
+                                                startDecorator={<DoneIcon />}
+                                                variant="soft"
+                                                color="success"
+                                            >
+                                                <div>
+                                                    You are subscribed to receive weekly bin reminders. <a href={`https://prod-248.westeurope.logic.azure.com/workflows/fb257102e10f4f8f9bbd84a2d3f78716/triggers/manual/paths/invoke/uuid/${props.uuid}?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v2Mt8VwmaoqE63MjjnTSNqn8CR7P3HKcinwaz68d6D8`} title="unsubscribe to bin collection reminders">Unsubscribe</a>
+                                                </div>
+                                            </Alert>
+                                        )
 
-                                }
-                            </AccordionDetails>
-                        </Accordion>
-                    </AccordionGroup>
-                </Box>
-            ) : {}}
+                                        }
+                                    </AccordionDetails>
+                                </Accordion>
+                            </AccordionGroup>
+                        </Box>
+                    ) : {}}
+                </CssVarsProvider>
+            </CacheProvider>
         </>
     )
 }
