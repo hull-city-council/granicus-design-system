@@ -38,6 +38,7 @@ const topTasks = r2wc(TopTasks, {
 });
 
 const upcomingCollections = r2wc(UpcomingBinCollections, {
+  shadow: "closed",
   props: {
     uprn: "string",
     sid: "string",
