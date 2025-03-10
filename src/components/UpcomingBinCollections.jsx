@@ -123,7 +123,8 @@ export default function UpcomingBinCollections({ container, ...props }) {
         <>
             <CacheProvider value={cache}>
                 <StyledEngineProvider injectFirst>
-                    <CssVarsProvider theme={joyTheme}>
+                    <CssVarsProvider theme={joyTheme} colorSchemeNode={container}
+                        disableNestedContext>
                         <ThemeProvider theme={materialTheme}>
                             {eventData && (
                                 <Alert
