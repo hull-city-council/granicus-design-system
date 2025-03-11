@@ -28,16 +28,21 @@ export default function UpcomingBinCollections({ container, ...props }) {
         },
         components: {
             MuiPopover: {
-              defaultProps: {
-                container: container
-              }
+                defaultProps: {
+                    container: container
+                }
             },
             MuiPopper: {
-              defaultProps: {
-                container: container
-              }
+                defaultProps: {
+                    container: container
+                }
+            },
+            MuiDataGrid: {
+                defaultProps: {
+                    container: container
+                }
             }
-          }
+        }
     });
 
     const cache = useMemo(() => createCache({
@@ -138,7 +143,7 @@ export default function UpcomingBinCollections({ container, ...props }) {
                 <StyledEngineProvider injectFirst>
                     <CssVarsProvider theme={joyTheme} colorSchemeNode={container}
                         disableNestedContext>
-                            <CssBaseline />
+                        <CssBaseline />
                         <ThemeProvider theme={materialTheme}>
                             {eventData && (
                                 <Alert
