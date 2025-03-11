@@ -5,8 +5,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import createCache from '@emotion/cache';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import ReportIcon from "@mui/icons-material/Report";
 import { Box, LinearProgress, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -44,6 +45,20 @@ export default function UpcomingBinCollections({ container, ...props }) {
             }
         }
     });
+
+    const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+        [`&.${gridClasses.root}`]: {
+          border: 0,
+          WebkitFontSmoothing: 'auto',
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: theme.palette.background.paper,
+            borderBottom: `1px solid ${theme.palette.divider}`,
+          },
+          '& .MuiDataGrid-cell': {
+            borderBottom: `1px solid ${theme.palette.divider}`,
+          },
+        }
+      }));
 
     const cache = useMemo(() => createCache({
         container,
@@ -167,7 +182,7 @@ export default function UpcomingBinCollections({ container, ...props }) {
                             )}
                             {props.uprn.length > 0 ? (
                                 <Box sx={{ width: "100%" }} boxShadow={1}>
-                                    <DataGrid
+                                    <StyledDataGrid
                                         sx={{
                                             background: "#fff",
                                             height: "265px",
