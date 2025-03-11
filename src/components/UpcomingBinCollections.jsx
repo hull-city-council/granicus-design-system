@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Avatar, Accordion, AccordionGroup, AccordionDetails, accordionDetailsClasses, AccordionSummary, accordionSummaryClasses, ListItemContent, FormControl, FormLabel, Switch, Select, Option, Button, Input, Typography } from "@mui/joy";
+import { Alert, Avatar, Accordion, AccordionGroup, AccordionDetails, accordionDetailsClasses, AccordionSummary, accordionSummaryClasses, ListItemContent, FormControl, FormLabel, Select, Option, Button, Input, Typography, Checkbox } from "@mui/joy";
 import { DataGrid } from "@mui/x-data-grid";
 import ReportIcon from "@mui/icons-material/Report";
 import { Box, LinearProgress, Stack } from "@mui/material";
@@ -7,6 +7,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import DoneIcon from "@mui/icons-material/Done";
 import { getUpcomingBinCollections, SubscribeToCollectionEmails } from "../lookups";
+import Switch from '@mui/material/Switch';
 
 export default function UpcomingBinCollections({ ...props }) {
 
@@ -205,9 +206,9 @@ export default function UpcomingBinCollections({ ...props }) {
                                 {!props.uuid ? (
                                     <form onSubmit={(event) => subscribe(event, props.uprn, props.ucrn)}>
                                         <Stack spacing={1.5}>
-                                            <FormControl orientation="horizontal" sx={{ gap: 1 }}>
-                                                <FormLabel>Weekly email reminder</FormLabel>
-                                                <Switch size="lg" color="danger" variant="soft" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
+                                            <FormControl orientation="horizontal" sx={{ gap: 2, justifyContent: "space-between" }}>
+                                                <FormLabel htmlFor="reminder-switch">Weekly email reminder</FormLabel>
+                                                <Switch tabIndex={0} id="reminder-switch" size="lg" color="error" aria-label="Toggle weekly email reminders" disabled={isStateDisabled} onChange={() => setIsSubscribedToReminders((isSubscribedToReminders) => !isSubscribedToReminders)} />
                                             </FormControl>
                                             {isSubscribedToReminders && (
                                                 <>
