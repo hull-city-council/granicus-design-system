@@ -44,19 +44,19 @@ export default function TopTasks({ container, ...props }) {
   const tasks = [
     {
       name: "Bulky item collection",
-      url: ""
+      url: "/service/Bulky_item_collection"
     },
     {
       name: "Bin delivery, exchange or removal",
-      url: ""
+      url: "/service/Bin_delivery__exchange_or_removal"
     },
     {
       name: "Apply for a blue badge",
-      url: ""
+      url: "/service/Blue_badge_application"
     },
     {
       name: "Missed bins",
-      url: ""
+      url: "/service/Report_a_Missed_Bin"
     }
 
   ];
