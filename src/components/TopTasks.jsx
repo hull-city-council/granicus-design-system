@@ -151,7 +151,7 @@ export default function TopTasks({ container, ...props }) {
                   <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Tasks</ListSubheader>
                   {tasks.map((task) => {
                     return (
-                      <ListItem key={task.name} >
+                      <ListItem component="a" href={task.url} key={task.name} sx={{ textDecoration: "none" }}>
                         <ListItemButton sx={{ justifyContent: "space-between" }}>
                           {task.name}
                           <ListItemDecorator>
@@ -196,7 +196,7 @@ export default function TopTasks({ container, ...props }) {
                   <Stack spacing={1}>
                     {accounts.map((account) => {
                       return (
-                        <ListItem component="a" href={account.url} key={account.name}  sx={{ textDecoration: "none" }}>
+                        <ListItem component="a" href={account.url} key={account.name} sx={{ textDecoration: "none" }}>
                           <ListItemButton sx={{ justifyContent: "space-between" }}>
                             <ListItemContent>
                               <Typography sx={{ fontWeight: "bold" }}>{account.name}</Typography>
