@@ -33,7 +33,8 @@ const cardImage = r2wc(ImageCard, {
 const topTasks = r2wc(TopTasks, {
   shadow: "closed",
   props: { 
-    type: "string" 
+    type: "string",
+    uprn: "string",
   },
 });
 

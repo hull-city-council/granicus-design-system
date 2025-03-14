@@ -11,6 +11,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemContent,
   Avatar,
   AccordionGroup,
   Accordion,
@@ -37,24 +38,44 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
     {
       accounts: [
         {
-          name: "Council tax",
+          name: "Council Tax",
+          description: "Council Tax, Housing Benefits and Business Rates",
           url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
         },
         {
-          name: "Housing",
+          name: "myHousing",
+          description: "Homesearch and Hull City Council tenants",
           url: "https://hullcc.engagehousing.app/",
         },
         {
-          name: "School portal",
+          name: "Education Portal",
+          description: "School applications for parents/guardians",
           url: "https://hull.cloud.servelec-synergy.com/Synergy/Live/SynergyWeb/",
         },
         {
-          name: "Libraries",
+          name: "Hull Libraries",
+          description: "Library memberships",
           url: "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/?#",
         },
         {
-          name: "Job vacancies",
+          name: "Jobs Portal",
+          description: "Job vacancies and applications",
           url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
+        },
+        {
+          name: "Hull Theatres and Halls",
+          description: "Make and manage bookings",
+          url: "https://www.hulltheatres.co.uk/account/signin",
+        },
+        {
+          name: "Leisure and Sports",
+          description: "Book activities and manage memberships",
+          url: "https://hcandl.legendonlineservices.co.uk/enterprise/account/login",
+        },
+        {
+          name: "Planning Portal",
+          description: "Planning applications and comments",
+          url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp",
         },
       ],
     },
@@ -68,29 +89,31 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
     },
     '& span': { transition: '0.15s' },
   };
-  
+
   return (
     <>
       <CacheProvider value={cache}>
         <CssVarsProvider theme={theme}>
           <CssBaseline />
           <Stack spacing={2}>
-            <Card variant="outlined" sx={{backgroundColor: "white"}}>
+            <Card variant="outlined" sx={{ backgroundColor: "white" }}>
               <Typography level="h2">Sign in to your account</Typography>
               <Typography>
                 Sign up or sign in to your account to access our online services.
               </Typography>
               <List>
-                {benefitsObject.map((benefit, index) => (
-                  <ListItem key={index}>
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: grey[200] }}>
-                        <CheckIcon sx={{ color: grey[500] }} />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={benefit} />
-                  </ListItem>
-                ))}
+                <Stack spacing={2}>
+                  {benefitsObject.map((benefit, index) => (
+                    <ListItem key={index}>
+                      <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: grey[200] }}>
+                          <CheckIcon sx={{ color: grey[500] }} />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={benefit} />
+                    </ListItem>
+                  ))}
+                </Stack>
               </List>
               <Button
                 endDecorator={<ArrowForwardIcon />}
@@ -110,7 +133,7 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
                 size="lg"
                 component="a"
                 href={registerurl}
-                sx={{borderRadius: 12}}
+                sx={{ borderRadius: 12 }}
               >
                 Sign up
               </Button>
@@ -121,8 +144,15 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
                   </AccordionSummary>
                   <AccordionDetails>
                     {otherAccounts[0].accounts.map((account, index) => (
-                      <ListItem component="a" href={account.url} key={index}>
-                        <ListItemButton>{account.name}</ListItemButton>
+                      <ListItem component="a" href={account.url} key={index} sx={{ textDecoration: "none" }}>
+                        <ListItemButton>
+                          <ListItemContent>
+                            <Typography level="title-sm">{account.name}</Typography>
+                            <Typography level="body-sm" noWrap>
+                              {account.description}
+                            </Typography>
+                          </ListItemContent>
+                        </ListItemButton>
                       </ListItem>
                     ))}
                   </AccordionDetails>

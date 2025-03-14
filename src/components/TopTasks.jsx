@@ -10,17 +10,27 @@ import {
   ListItem,
   ListItemButton,
   ListItemDecorator,
+  ListItemContent,
   ListSubheader,
+  Typography,
+  Stack
 } from "@mui/joy";
 import { Collapse } from '@mui/material';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRightRounded';
 
-export default function TopTasks({ type, container }) {
+export default function TopTasks({ container, ...props }) {
 
   const [tasksExpanded, setTasksExpanded] = useState(false);
   const [accountsExpanded, setAccountsExpanded] = useState(false);
 
-  const cache = useMemo(() => createCache({ container, key: "css", prepend: true }), [container]);
+  const cache = useMemo(() =>
+    createCache({
+      container,
+      key: "css",
+      prepend: true,
+      stylisPlugins: [],
+      insertionPoint: container
+    }), [container]);
 
   const joyTheme = useTheme({
     palette: {
@@ -47,57 +57,68 @@ export default function TopTasks({ type, container }) {
     {
       name: "Missed bins",
       url: ""
-    },
-    {
-      name: "Missed bins",
-      url: ""
-    },
-    {
-      name: "Missed bins",
-      url: ""
     }
 
   ];
 
   const accounts = [
     {
-      name: "Council tax",
-      url: ""
+      name: "Council Tax",
+      description: "Council Tax, Housing Benefits and Business Rates",
+      url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
     },
     {
       name: "myHousing",
-      url: ""
+      description: "Homesearch and Hull City Council tenants",
+      url: "https://hullcc.engagehousing.app/",
     },
     {
-      name: "Parking",
-      url: ""
+      name: "Education Portal",
+      description: "School applications for parents/guardians",
+      url: "https://hull.cloud.servelec-synergy.com/Synergy/Live/SynergyWeb/",
     },
     {
-      name: "Leisure",
-      url: ""
+      name: "Hull Libraries",
+      description: "Library memberships",
+      url: "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/?#",
     },
     {
-      name: "Schools",
-      url: ""
+      name: "Jobs Portal",
+      description: "Job vacancies and applications",
+      url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
     },
     {
-      name: "Schools",
-      url: ""
-    }
+      name: "Hull Theatres and Halls",
+      description: "Make and manage bookings",
+      url: "https://www.hulltheatres.co.uk/account/signin",
+    },
+    {
+      name: "Leisure and Sports",
+      description: "Book activities and manage memberships",
+      url: "https://hcandl.legendonlineservices.co.uk/enterprise/account/login",
+    },
+    {
+      name: "Planning Portal",
+      description: "Planning applications and comments",
+      url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp",
+    },
   ];
 
   const links = [
     {
-      name: "Sign up for email updates",
-      url: ""
+      name: "Latest Updates",
+      description: "Sign up for email updates and manage preferences",
+      url: "https://public.govdelivery.com/accounts/UKHULL/subscriber/new"
     },
     {
-      name: "Have your say",
-      url: ""
+      name: "Have Your Say",
+      description: "Get involved and contribute to the future of Hull",
+      url: "https://yoursay.hull.gov.uk/"
     },
     {
-      name: "Find your nearest",
-      url: ""
+      name: "My Nearest",
+      description: "Find local services and facilities as well as maps, including public rights of way and cycle routes",
+      url: "https://maps.hull.gov.uk/myhull.aspx?action=SetAddress&UniqueId=0000" + `${props.uprn}`
     }
   ];
 
@@ -105,15 +126,17 @@ export default function TopTasks({ type, container }) {
     textTransform: "none",
     fontSize: "1.2rem",
     letterSpacing: "unset",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginBottom: 2
   }
 
   return (
     <>
       <CacheProvider value={cache}>
-        <CssVarsProvider theme={joyTheme}>
+        <CssVarsProvider theme={joyTheme}
+          disableNestedContext={true}>
           <ThemeProvider theme={materialTheme}>
-            <Collapse in={tasksExpanded} collapsedSize={240} sx={{ position: 'relative',  fontFamily: '"Arial", "sans-serif"' }}>
+            <Collapse in={tasksExpanded} collapsedSize={240} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
               <Box
                 sx={{
                   flexGrow: 1,
@@ -155,9 +178,9 @@ export default function TopTasks({ type, container }) {
               display: tasksExpanded ? 'none' : 'flex',
               justifyContent: 'center',
             }}>
-              <Button onClick={() => setTasksExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, }}>View more</Button>
+              <Button onClick={() => setTasksExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, backgroundColor: "#fff" }}>View more</Button>
             </Box>
-            <Collapse in={accountsExpanded} collapsedSize={240} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
+            <Collapse in={accountsExpanded} collapsedSize={280} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
               <Box
                 sx={{
                   flexGrow: 1,
@@ -170,18 +193,25 @@ export default function TopTasks({ type, container }) {
               >
                 <List size="lg">
                   <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Other accounts</ListSubheader>
-                  {accounts.map((account) => {
-                    return (
-                      <ListItem key={account.name}>
-                        <ListItemButton sx={{ justifyContent: "space-between" }}>
-                          {account.name}
-                          <ListItemDecorator>
-                            <KeyboardArrowRight fontSize="xl3" />
-                          </ListItemDecorator>
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  })}
+                  <Stack spacing={1}>
+                    {accounts.map((account) => {
+                      return (
+                        <ListItem component="a" href={account.url} key={account.name}  sx={{ textDecoration: "none" }}>
+                          <ListItemButton sx={{ justifyContent: "space-between" }}>
+                            <ListItemContent>
+                              <Typography sx={{ fontWeight: "bold" }}>{account.name}</Typography>
+                              <Typography sx={{ color: "#555E68" }}>
+                                {account.description}
+                              </Typography>
+                            </ListItemContent>
+                            <ListItemDecorator>
+                              <KeyboardArrowRight fontSize="xl3" />
+                            </ListItemDecorator>
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </Stack>
                 </List>
               </Box>
               <Box sx={{
@@ -199,25 +229,31 @@ export default function TopTasks({ type, container }) {
               display: accountsExpanded ? 'none' : 'flex',
               justifyContent: 'center',
             }}>
-              <Button onClick={() => setAccountsExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12 }}>View more</Button>
+              <Button onClick={() => setAccountsExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, backgroundColor: "#fff" }}>View more</Button>
             </Box>
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  gap: 2,
-                  flexWrap: 'wrap',
-                  '& > *': { minWidth: 0, flexBasis: 200 },
-                }}
-              >
-                <List size="lg" sx={{ fontFamily: '"Arial", "sans-serif"' }}>
-                  <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Useful links</ListSubheader>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 2,
+                flexWrap: 'wrap',
+                '& > *': { minWidth: 0, flexBasis: 200 },
+              }}
+            >
+              <List size="lg" sx={{ fontFamily: '"Arial", "sans-serif"' }}>
+                <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Useful links</ListSubheader>
+                <Stack spacing={1}>
                   {links.map((link) => {
                     return (
-                      <ListItem key={link.name}>
+                      <ListItem component="a" href={link.url} key={link.name}  sx={{ textDecoration: "none" }}>
                         <ListItemButton sx={{ justifyContent: "space-between" }}>
-                          {link.name}
+                          <ListItemContent>
+                            <Typography sx={{ fontWeight: "bold" }}>{link.name}</Typography>
+                            <Typography sx={{ color: "#555E68" }}>
+                              {link.description}
+                            </Typography>
+                          </ListItemContent>
                           <ListItemDecorator>
                             <KeyboardArrowRight fontSize="xl3" />
                           </ListItemDecorator>
@@ -225,8 +261,9 @@ export default function TopTasks({ type, container }) {
                       </ListItem>
                     );
                   })}
-                </List>
-              </Box>
+                </Stack>
+              </List>
+            </Box>
           </ThemeProvider>
         </CssVarsProvider>
       </CacheProvider>
