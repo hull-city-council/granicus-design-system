@@ -16,6 +16,7 @@ const alert = r2wc(FormAlert, {
 });
 
 const signInRegister = r2wc(SignInRegister, {
+  shadow: "open",
   props: { 
     benefits: "string", 
     signinurl: "string", 
