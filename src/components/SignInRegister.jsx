@@ -1,8 +1,6 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import {
   Stack,
   Card,
@@ -23,15 +21,13 @@ import { grey } from "@mui/material/colors";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckIcon from "@mui/icons-material/Check";
 
-export default function SignInRegister({ benefits, signinurl, registerurl, container }) {
+export default function SignInRegister({ benefits, signinurl, registerurl }) {
 
   const theme = useTheme({
     palette: {
       mode: "light"
     },
   });
-
-  const cache = useMemo(() => createCache({ container, key: "css", prepend: true }), [container]);
 
   const benefitsObject = benefits.split(",");
   const otherAccounts = [
@@ -92,7 +88,6 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
 
   return (
     <>
-      <CacheProvider value={cache}>
         <CssVarsProvider theme={theme}>
           <CssBaseline />
           <Stack spacing={2}>
@@ -161,7 +156,6 @@ export default function SignInRegister({ benefits, signinurl, registerurl, conta
             </Card>
           </Stack>
         </CssVarsProvider>
-      </CacheProvider>
     </>
   );
 }

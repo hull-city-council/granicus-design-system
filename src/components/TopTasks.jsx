@@ -1,8 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { CssVarsProvider, useTheme } from '@mui/joy/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 import {
   Button,
   Box,
@@ -18,19 +16,10 @@ import {
 import { Collapse } from '@mui/material';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRightRounded';
 
-export default function TopTasks({ container, ...props }) {
+export default function TopTasks({ ...props }) {
 
   const [tasksExpanded, setTasksExpanded] = useState(false);
   const [accountsExpanded, setAccountsExpanded] = useState(false);
-
-  const cache = useMemo(() =>
-    createCache({
-      container,
-      key: "css",
-      prepend: true,
-      stylisPlugins: [],
-      insertionPoint: container
-    }), [container]);
 
   const joyTheme = useTheme({
     palette: {
@@ -132,9 +121,7 @@ export default function TopTasks({ container, ...props }) {
 
   return (
     <>
-      <CacheProvider value={cache}>
-        <CssVarsProvider theme={joyTheme}
-          disableNestedContext={true}>
+        <CssVarsProvider theme={joyTheme}>
           <ThemeProvider theme={materialTheme}>
             <Collapse in={tasksExpanded} collapsedSize={240} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
               <Box
@@ -266,7 +253,6 @@ export default function TopTasks({ container, ...props }) {
             </Box>
           </ThemeProvider>
         </CssVarsProvider>
-      </CacheProvider>
     </>
   );
 }
