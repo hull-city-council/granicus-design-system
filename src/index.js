@@ -23,10 +23,10 @@ const signInRegister = r2wc(SignInRegister, {
 });
 
 const cardImage = r2wc(ImageCard, {
-  shadow: "closed",
   props: { 
     accountname: "string", 
-    type: "string" },
+    type: "string" 
+  },
 });
 
 const topTasks = r2wc(TopTasks, {
