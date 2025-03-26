@@ -35,43 +35,48 @@ export default function SignInRegister({ benefits, signinurl, registerurl }) {
       accounts: [
         {
           name: "Council Tax",
-          description: "Council Tax, Housing Benefits and Business Rates",
+          description: "Tell us about a change of address, apply for a discount or exemption. You can also find out when your payments are due and how much they are",
           url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
         },
         {
-          name: "myHousing",
-          description: "Homesearch and Hull City Council tenants",
+          name: "Council Housing",
+          description: "Bid for council homes, book a council housing repair or access your rent account",
           url: "https://hullcc.engagehousing.app/",
         },
         {
-          name: "Education Portal",
-          description: "School applications for parents/guardians",
+          name: "Housing Benefit",
+          description: "Check your payment history and find out when payments are due or tell us about a change in circumstances",
+          url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
+        },
+        {
+          name: "Education",
+          description: "School applications, transfers and information on childcare",
           url: "https://hull.cloud.servelec-synergy.com/Synergy/Live/SynergyWeb/",
         },
         {
           name: "Hull Libraries",
-          description: "Library memberships",
+          description: "Join the library or search our catalogue",
           url: "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/?#",
         },
         {
-          name: "Jobs Portal",
-          description: "Job vacancies and applications",
-          url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
-        },
-        {
-          name: "Hull Theatres and Halls",
-          description: "Make and manage bookings",
-          url: "https://www.hulltheatres.co.uk/account/signin",
-        },
-        {
-          name: "Leisure and Sports",
+          name: "Hull Leisure",
           description: "Book activities and manage memberships",
           url: "https://hcandl.legendonlineservices.co.uk/enterprise/account/login",
         },
         {
-          name: "Planning Portal",
-          description: "Planning applications and comments",
+          name: "Planning",
+          description: "Submit an application or find and comment on existing applications",
           url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp",
+        },
+        {
+          name: "Hull Theatres and Halls",
+          description: "Find out what’s on and purchase tickets",
+          url: "https://www.hulltheatres.co.uk/account/signin",
+        },
+        {
+          name: "Jobs",
+          description: "Search and apply for our latest vacancies and partner vacancies",
+          url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
         },
       ],
     },
