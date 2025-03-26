@@ -30,7 +30,6 @@ const cardImage = r2wc(ImageCard, {
 });
 
 const topTasks = r2wc(TopTasks, {
-  shadow: "closed",
   props: { 
     type: "string",
     uprn: "string",
@@ -46,9 +45,7 @@ const upcomingCollections = r2wc(UpcomingBinCollections, {
     uuid: "string"
   }
 });
-const featuredNewsItems = r2wc(FeaturedNews, {
-  shadow: "closed"
-});
+const featuredNewsItems = r2wc(FeaturedNews);
 
 customElements.define("alert-component", alert);
 customElements.define("sign-in-register", signInRegister);
