@@ -6,7 +6,6 @@ import {
   Box,
   List,
   ListItem,
-  ListItemButton,
   ListItemDecorator,
   ListItemContent,
   ListSubheader,
@@ -138,13 +137,11 @@ export default function TopTasks({ ...props }) {
                   <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Tasks</ListSubheader>
                   {tasks.map((task) => {
                     return (
-                      <ListItem component="a" href={task.url} key={task.name} sx={{ textDecoration: "none" }}>
-                        <ListItemButton sx={{ justifyContent: "space-between" }}>
+                      <ListItem component="a" href={task.url} key={task.name} sx={{ textDecoration: "none",  justifyContent: "space-between" }}>
                           {task.name}
                           <ListItemDecorator>
                             <KeyboardArrowRight fontSize="xl3" />
                           </ListItemDecorator>
-                        </ListItemButton>
                       </ListItem>
                     );
                   })}
@@ -183,8 +180,7 @@ export default function TopTasks({ ...props }) {
                   <Stack spacing={1}>
                     {accounts.map((account) => {
                       return (
-                        <ListItem component="a" href={account.url} key={account.name} sx={{ textDecoration: "none" }}>
-                          <ListItemButton sx={{ justifyContent: "space-between" }}>
+                        <ListItem component="a" href={account.url} key={account.name} sx={{ textDecoration: "none", justifyContent: "space-between" }}>
                             <ListItemContent>
                               <Typography sx={{ fontWeight: "bold" }}>{account.name}</Typography>
                               <Typography sx={{ color: "#555E68" }}>
@@ -194,7 +190,6 @@ export default function TopTasks({ ...props }) {
                             <ListItemDecorator>
                               <KeyboardArrowRight fontSize="xl3" />
                             </ListItemDecorator>
-                          </ListItemButton>
                         </ListItem>
                       );
                     })}
@@ -233,8 +228,7 @@ export default function TopTasks({ ...props }) {
                 <Stack spacing={1}>
                   {links.map((link) => {
                     return (
-                      <ListItem component="a" href={link.url} key={link.name}  sx={{ textDecoration: "none" }}>
-                        <ListItemButton sx={{ justifyContent: "space-between" }}>
+                      <ListItem component="a" href={link.url} key={link.name}  sx={{ textDecoration: "none", justifyContent: "space-between" }}>
                           <ListItemContent>
                             <Typography sx={{ fontWeight: "bold" }}>{link.name}</Typography>
                             <Typography sx={{ color: "#555E68" }}>
@@ -244,7 +238,6 @@ export default function TopTasks({ ...props }) {
                           <ListItemDecorator>
                             <KeyboardArrowRight fontSize="xl3" />
                           </ListItemDecorator>
-                        </ListItemButton>
                       </ListItem>
                     );
                   })}
