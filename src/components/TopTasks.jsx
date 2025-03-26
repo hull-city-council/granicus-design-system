@@ -175,7 +175,7 @@ export default function TopTasks({ ...props }) {
           }}>
             <Button onClick={() => setTasksExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, backgroundColor: "#fff" }}>View more</Button>
           </Box>
-          <Collapse in={accountsExpanded} collapsedSize={280} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
+          <Collapse in={accountsExpanded} collapsedSize={340} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
             <Box
               sx={{
                 flexGrow: 1,
@@ -224,7 +224,7 @@ export default function TopTasks({ ...props }) {
           }}>
             <Button onClick={() => setAccountsExpanded(true)} variant="outlined" color="neutral" sx={{ fontFamily: '"Arial", "sans-serif"', borderRadius: 12, backgroundColor: "#fff" }}>View more</Button>
           </Box>
-          <Collapse in={linksExpanded} collapsedSize={240} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
+          <Collapse in={linksExpanded} collapsedSize={290} sx={{ position: 'relative', fontFamily: '"Arial", "sans-serif"' }}>
             <Box
               sx={{
                 flexGrow: 1,
