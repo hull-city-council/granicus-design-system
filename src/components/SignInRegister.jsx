@@ -35,7 +35,7 @@ export default function SignInRegister({ benefits, signinurl, registerurl }) {
       accounts: [
         {
           name: "Council Tax",
-          description: "Tell us about a change of address, apply for a discount or exemption. You can also find out when your payments are due and how much they are",
+          description: "Update your address, apply for discounts or exemptions, and check payment dates and amounts",
           url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
         },
         {
