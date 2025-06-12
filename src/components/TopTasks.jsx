@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CssVarsProvider, useTheme } from '@mui/joy/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {
-  Button,
-  Box,
-  List,
-  ListItem,
-  ListItemDecorator,
-  ListItemContent,
-  ListSubheader,
-  Typography,
-  Stack
-} from "@mui/joy";
+import Button from "@mui/joy/Button";
+import Box from "@mui/joy/Box";
+import List from "@mui/joy/List";
+import ListItem from "@mui/joy/ListItem";
+import ListItemDecorator from "@mui/joy/ListItemDecorator";
+import ListItemContent from "@mui/joy/ListItemContent";
+import ListSubheader from "@mui/joy/ListSubheader";
+import Typography from "@mui/joy/Typography";
+import Stack from "@mui/joy/Stack";
 import { Collapse } from '@mui/material';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRightRounded';
 

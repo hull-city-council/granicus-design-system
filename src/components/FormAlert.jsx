@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import  { useMemo } from "react";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
@@ -6,7 +6,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import WarningIcon from "@mui/icons-material/Warning";
 import ReportIcon from "@mui/icons-material/Report";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Alert, Typography } from "@mui/joy";
+import Alert from "@mui/joy/Alert";
+import Typography from "@mui/joy/Typography";
 
 export default function FormAlert({ title, type, content, container }) {
 

@@ -1,21 +1,18 @@
-import React from "react";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
-import {
-  Stack,
-  Card,
-  Button,
-  Typography,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemContent,
-  Avatar,
-  AccordionGroup,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from "@mui/joy";
+import Stack from "@mui/joy/Stack";
+import Card from "@mui/joy/Card";
+import Button from "@mui/joy/Button";
+import Typography from "@mui/joy/Typography";
+import List from "@mui/joy/List";
+import ListItem from "@mui/joy/ListItem";
+import ListItemButton from "@mui/joy/ListItemButton";
+import ListItemContent from "@mui/joy/ListItemContent";
+import Avatar from "@mui/joy/Avatar";
+import AccordionGroup from "@mui/joy/AccordionGroup";
+import Accordion from "@mui/joy/Accordion";
+import AccordionDetails from "@mui/joy/AccordionDetails";
+import AccordionSummary from "@mui/joy/AccordionSummary";
 import { ListItemAvatar, ListItemText } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

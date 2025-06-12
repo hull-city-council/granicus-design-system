@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
-import { Box, Button, Typography, Sheet, Stack } from "@mui/joy";
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
+import Stack from "@mui/joy/Stack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { getFeaturedNewsItems } from "../lookups";
 

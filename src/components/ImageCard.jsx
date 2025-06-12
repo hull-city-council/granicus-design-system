@@ -1,11 +1,8 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Grid,
-} from "@mui/joy";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import Button from "@mui/joy/Button";
+import Grid from "@mui/joy/Grid";
 import { CssVarsProvider, useTheme } from "@mui/joy/styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
