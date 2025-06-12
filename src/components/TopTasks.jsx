@@ -29,97 +29,182 @@ export default function TopTasks({ ...props }) {
 
   const materialTheme = createTheme();
 
+  const tasks = {
+    resident: [
+      {
+        name: "Make a payment",
+        url: "https://www.hull.gov.uk/paying-council-bills"
+      },
+      {
+        name: "Highway permit application",
+        url: "/service/highway_permit_request"
+      },
+      {
+        name: "Planning permission application",
+        url: "https://www.planningportal.co.uk/app/landing-page"
+      },
+      {
+        name: "Business rates general enquiry",
+        url: "/service/Business_Rates_general_enquiry"
+      }
+    ],
+    business: [
+      {
+        name: "Make a payment",
+        url: "https://www.hull.gov.uk/paying-council-bills"
+      },
+      {
+        name: "Business Rates",
+        url: "/service/Business_Rates"
+      },
+      {
+        name: "Planning applications",
+        url: "/service/Planning_Applications"
+      },
+      {
+        name: "Licences and permits",
+        url: "/service/Licences_and_Permits"
+      }
+    ]
+  };
 
-  const tasks = [
-    {
-      name: "Make a payment",
-      url: "https://www.hull.gov.uk/paying-council-bills"
-    },
-    {
-      name: "Bulky item collection",
-      url: "/service/Bulky_item_collection"
-    },
-    {
-      name: "Blue badges",
-      url: "/service/Blue_badge_application"
-    },
-    {
-      name: "Missed bins",
-      url: "/service/Report_a_Missed_Bin"
-    }
+  const accounts = {
+    resident: [
+      {
+        name: "Council Tax",
+        description: "Update your address, apply for discounts or exemptions, and check payment dates and amounts",
+        url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
+      },
+      {
+        name: "Council Housing",
+        description: "Bid for council homes, book a council housing repair or access your rent account",
+        url: "https://hullcc.engagehousing.app/",
+      },
+      {
+        name: "Housing Benefit",
+        description: "Check your payment history and find out when payments are due or tell us about a change in circumstances",
+        url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
+      },
+      {
+        name: "Education",
+        description: "School applications, transfers and information on childcare",
+        url: "https://hull.cloud.servelec-synergy.com/Synergy/Live/SynergyWeb/",
+      },
+      {
+        name: "Hull Libraries",
+        description: "Join the library or search our catalogue",
+        url: "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/?#",
+      },
+      {
+        name: "Hull Leisure",
+        description: "Book activities and manage memberships",
+        url: "https://hcandl.legendonlineservices.co.uk/enterprise/account/login",
+      },
+      {
+        name: "Planning",
+        description: "Submit an application or find and comment on existing applications",
+        url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp",
+      },
+      {
+        name: "Hull Theatres and Halls",
+        description: "Find out what’s on and purchase tickets",
+        url: "https://www.hulltheatres.co.uk/account/signin",
+      },
+      {
+        name: "Jobs",
+        description: "Search and apply for our latest vacancies and partner vacancies",
+        url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
+      },
+    ],
+    business: [
+      {
+        name: "Business Rates",
+        description: "Check your balance, make payments, update details and more",
+        url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p"
+      },
+      {
+        name: "Business Licences",
+        description: "Apply for or manage your business licences",
+        url: "https://www.hull.gov.uk/business-licences/account/signin"
+      },
+      {
+        name: "Planning",
+        description: "Submit an application or find and comment on existing applications",
+        url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp"
+      }
+    ]
+  };
 
-  ];
+  const links = {
+    resident: [
+      {
+        name: "Latest Updates",
+        description: "Sign up for email updates and manage preferences",
+        url: "https://public.govdelivery.com/accounts/UKHULL/subscriber/new"
+      },
+      {
+        name: "Have Your Say",
+        description: "Get involved and contribute to the future of Hull",
+        url: "https://yoursay.hull.gov.uk/"
+      },
+      {
+        name: "My Nearest",
+        description: "Find local services and facilities as well as maps, including public rights of way and cycle routes",
+        url: "https://maps.hull.gov.uk/myhull.aspx?action=SetAddress&UniqueId=0000" + `${props.uprn}`
+      },
+      {
+        name: "Community Directory",
+        description: "Search for local groups, activities, services and more to support you in your everyday life",
+        url: "https://hull-communitydirectory.powerappsportals.com/"
+      },
+    ],
+    business: [
+      {
+        name: "Latest Business Updates",
+        description: "Sign up for email updates and manage preferences",
+        url: "https://public.govdelivery.com/accounts/UKHULL/signup/39993"
+      },
+      {
+        name: "Grants and Funding",
+        description: "Find funding schemes and grant opportunities",
+        url: "https://investhull.co.uk/business-support/grants-and-funding"
+      },
+      {
+        name: "Commercial Properties",
+        description: "View our commercial portfolio opportunities",
+        url: "https://www.hull.gov.uk/CommercialProperty/"
+      },
+      {
+        name: "HEY Growth Hub",
+        description: "Free and impartial information, advice and guidance for businesses",
+        url: "https://heygrowthhub.com/"
+      },
+      {
+        name: "Skills Bootcamp",
+        description: "View bespoke training solutions to bridge existing skills gaps within high demand sectors",
+        url: "https://www.hcctraining.ac.uk/skills-bootcamp-hull/"
+      },
+      {
+        name: "Business and IP Centre",
+        description: "Insights and access to free resources, training, and events",
+        url: "https://www.hulllibraries.co.uk/business-support-intellectual-property/business-ip-centre"
+      },
+      {
+        name: "Have Your Say",
+        description: "Get involved and contribute to the future of Hull",
+        url: "https://yoursay.hull.gov.uk/"
+      },
+      {
+        name: "My Nearest",
+        description: "Find local services and facilities as well as maps, including public rights of way and cycle routes",
+        url: "https://maps.hull.gov.uk/myhull.aspx?action=SetAddress&UniqueId=0000" + `${props.uprn}`
+      },
+    ]
+  };
 
-  const accounts = [
-    {
-      name: "Council Tax",
-      description: "Update your address, apply for discounts or exemptions, and check payment dates and amounts",
-      url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
-    },
-    {
-      name: "Council Housing",
-      description: "Bid for council homes, book a council housing repair or access your rent account",
-      url: "https://hullcc.engagehousing.app/",
-    },
-    {
-      name: "Housing Benefit",
-      description: "Check your payment history and find out when payments are due or tell us about a change in circumstances",
-      url: "https://www.hullcc.gov.uk/myrevsandbens/scripts/OPENPortal-Live.wsc/common/login.p",
-    },
-    {
-      name: "Education",
-      description: "School applications, transfers and information on childcare",
-      url: "https://hull.cloud.servelec-synergy.com/Synergy/Live/SynergyWeb/",
-    },
-    {
-      name: "Hull Libraries",
-      description: "Join the library or search our catalogue",
-      url: "https://hull.ent.sirsidynix.net.uk/client/en_GB/default/?#",
-    },
-    {
-      name: "Hull Leisure",
-      description: "Book activities and manage memberships",
-      url: "https://hcandl.legendonlineservices.co.uk/enterprise/account/login",
-    },
-    {
-      name: "Planning",
-      description: "Submit an application or find and comment on existing applications",
-      url: "https://www.hullcc.gov.uk/padcbc/publicaccess-live/login.jsp",
-    },
-    {
-      name: "Hull Theatres and Halls",
-      description: "Find out what’s on and purchase tickets",
-      url: "https://www.hulltheatres.co.uk/account/signin",
-    },
-    {
-      name: "Jobs",
-      description: "Search and apply for our latest vacancies and partner vacancies",
-      url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
-    },
-  ];
-
-  const links = [
-    {
-      name: "Latest Updates",
-      description: "Sign up for email updates and manage preferences",
-      url: "https://public.govdelivery.com/accounts/UKHULL/subscriber/new"
-    },
-    {
-      name: "Have Your Say",
-      description: "Get involved and contribute to the future of Hull",
-      url: "https://yoursay.hull.gov.uk/"
-    },
-    {
-      name: "My Nearest",
-      description: "Find local services and facilities as well as maps, including public rights of way and cycle routes",
-      url: "https://maps.hull.gov.uk/myhull.aspx?action=SetAddress&UniqueId=0000" + `${props.uprn}`
-    },
-    {
-      name: "Community Directory",
-      description: "Search for local groups, activities, services and more to support you in your everyday life",
-      url: "https://hull-communitydirectory.powerappsportals.com/"
-    },
-  ];
+  const topTasks = props.type === "business" ? tasks.business : tasks.resident;
+  const otherAccounts = props.type === "business" ? accounts.business : accounts.resident;
+  const usefulLinks = props.type === "business" ? links.business : links.resident;
 
   const subHeadingStyle = {
     textTransform: "none",
@@ -146,7 +231,7 @@ export default function TopTasks({ ...props }) {
             >
               <List size="lg">
                 <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Tasks</ListSubheader>
-                {tasks.map((task) => {
+                {topTasks.map((task) => {
                   return (
                     <ListItem component="a" href={task.url} key={task.name} sx={{ textDecoration: "none", justifyContent: "space-between" }}>
                       {task.name}
@@ -189,7 +274,7 @@ export default function TopTasks({ ...props }) {
               <List size="lg">
                 <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Other accounts</ListSubheader>
                 <Stack spacing={1}>
-                  {accounts.map((account) => {
+                  {otherAccounts.map((account) => {
                     return (
                       <ListItem component="a" href={account.url} key={account.name} sx={{ textDecoration: "none", justifyContent: "space-between" }}>
                         <ListItemContent>
@@ -238,7 +323,7 @@ export default function TopTasks({ ...props }) {
               <List size="lg" sx={{ fontFamily: '"Arial", "sans-serif"' }}>
                 <ListSubheader sx={[{ ...subHeadingStyle }]} variant="soft">Useful links</ListSubheader>
                 <Stack spacing={1}>
-                  {links.map((link) => {
+                  {usefulLinks.map((link) => {
                     return (
                       <ListItem component="a" href={link.url} key={link.name} target="_blank" sx={{ textDecoration: "none", justifyContent: "space-between" }}>
                         <ListItemContent>

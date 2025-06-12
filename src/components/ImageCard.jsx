@@ -53,7 +53,7 @@ export default function ImageCard({ accountname, type }) {
                   <Typography level="h1" component="h2" fontWeight={"normal"} sx={{ mt: 0 }}>
                     Welcome to{" "}
                     <Typography level="h1" sx={{ fontWeight: "bold" }}>
-                      myAccount {type === "business" ? "Business" : ""}
+                      {type === "business" ? "myBusiness" : "myAccount"}
                     </Typography>
                   </Typography>
                   <Grid container spacing={1} sx={{ mt: 2, width: "100%" }}>
