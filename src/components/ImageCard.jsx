@@ -30,7 +30,7 @@ export default function ImageCard({ accountname, type }) {
     <>
       <CssVarsProvider theme={theme}>
         <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-          <Grid xs={12} md={12} lg={type === "business" ? 8 : 12}>
+          <Grid xs={12} md={12} lg={12}>
             <Card
               variant="plain"
               sx={(theme) => ({
