@@ -113,6 +113,11 @@ export default function TopTasks({ ...props }) {
         description: "Search and apply for our latest vacancies and partner vacancies",
         url: "https://www.hullcc.gov.uk/jobs/Index.aspx",
       },
+      {
+        name: "Parking",
+        description: "Apply for digital permits and pay for parking",
+        url: "https://secure.mipermit.com/hull/Application/home.aspx",
+      },
     ],
     business: [
       {
